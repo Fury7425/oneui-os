@@ -1,0 +1,23 @@
+Everything this task creates outside the repo. Cleanup works through this list. Status: [planned] / [created] / [removed]
+
+[created] Hyper-V VM oneui-os-dev, id 4DB0628A-1C30-46DF-89B4-B0990CFDDBEF (config under E:\oneui-os-vm\oneui-os-dev\Virtual Machines\)
+[created] Checkpoint on oneui-os-dev: clean-install (installed, sshd + root key, before Plasma Setup)
+[created] Checkpoint on oneui-os-dev: wip-2026-10-13 (mid-loop; see note below)
+[created] Checkpoint on oneui-os-dev: wip-2026-10-13-qs (QS/right-pill concept pass, before the battery-gradient fix was pushed)
+[planned] Checkpoint on oneui-os-dev: themed-baseline
+VM-side test state (inside the VM, gone with it): mpv + mpv-mpris (media chip test); extra test users dev2, dev3; /etc/plasmalogin.conf.d/zz-vm-test-autologin.conf; user dev (test account), /usr/lib/plasmalogin/defaults.conf,
+  /tmp/plasmalogin.conf.orig, Default wallpaper 3840x2160.jxl symlinks, os-release rebranded,
+  Fedora look-and-feel dirs org.fedoraproject.{fedora,fedoralight,fedoradark}.desktop REPLACED BY BROKEN SYMLINKS (failed test;
+  restore with: dnf reinstall the package owning them, or restore checkpoint clean-install).
+[created] E:\oneui-os-vm\Fedora-KDE-Desktop-Live-44-1.7.x86_64.iso
+[created] E:\oneui-os-vm\oneui-os-dev.vhdx (64 GB dynamic)
+[created] E:\oneui-os-vm\ (folder, incl. oneui-os-dev\ config folder)
+[created] %USERPROFILE%\.ssh\ (folder did not exist before; remove if empty after cleanup)
+[created] %USERPROFILE%\.ssh\oneui_dev, %USERPROFILE%\.ssh\oneui_dev.pub
+[created] %USERPROFILE%\.ssh\known_hosts entries for the VM: 172.20.137.172, 172.27.129.45, 172.27.131.153 (ssh-keygen -R <ip> for each)
+[created] Scratchpad helper vmshot.ps1 (session temp dir, Hyper-V screen capture); removed with the session temp folder
+[changed] oneui-os-dev memory 6 GB -> 4 GB (host was short on RAM); goes away with the VM
+[planned] os\test\shots\ (screenshots)
+[planned] os\test\ARTIFACTS.txt (this file)
+[created] Host: current user added to local group "Hyper-V Administrators" (undo: Remove-LocalGroupMember -Group "Hyper-V Administrators" -Member "$env:USERDOMAIN\$env:USERNAME", then sign out/in)
+Not created: oneui-os-test VM (only removed if it turns out to exist). No Windows features enabled or other settings changed.

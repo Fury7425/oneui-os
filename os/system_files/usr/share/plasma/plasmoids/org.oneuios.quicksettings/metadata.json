@@ -1,0 +1,13 @@
+{
+    "KPackageStructure": "Plasma/Applet",
+    "KPlugin": {
+        "Authors": [{ "Name": "OneUI OS" }],
+        "Category": "System Information",
+        "Description": "One UI quick settings: click the Wi-Fi, volume and battery group in the taskbar for Wi-Fi, Bluetooth, toggles and sliders.",
+        "Icon": "preferences-system",
+        "Id": "org.oneuios.quicksettings",
+        "License": "GPL-2.0-or-later",
+        "Name": "Quick Settings"
+    },
+    "X-Plasma-API-Minimum-Version": "6.0"
+}

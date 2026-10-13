@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Popups and notifications: 28 px corners, glass strong (84 %), 14 px padding like the mockup quick panel. -->
+<!-- Each segment: glass fill (Window colour) plus a 1 px edge (text colour at 12 %, the mockup line token).
+     Class and fill sit on every shape: QtSvg does not pass the colour class from a group down to its children.
+     mask-* give Plasma the exact shape for blur and the visible region; without them floating panels stay
+     hidden at login (Plasma 6.6, seen in a F44 VM). No double hyphen in comments: it breaks the XML. -->
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="60" viewBox="0 0 200 60">
+  <style id="current-color-scheme">.ColorScheme-Background { color:#f0f0f3; } .ColorScheme-Text { color:#18181e; }</style>
+  <g id="topleft"><path class="ColorScheme-Background" style="fill:currentColor;fill-opacity:0.84" d="M0,28 A28,28 0 0 1 28,0 L28,28 Z"/><path class="ColorScheme-Text" style="fill:currentColor;fill-opacity:0.12" d="M0,28 A28,28 0 0 1 28,0 L28,1 A27,27 0 0 0 1,28 Z"/></g>
+  <g id="top"><rect class="ColorScheme-Background" style="fill:currentColor;fill-opacity:0.84" x="28" y="0" width="4" height="28"/><rect class="ColorScheme-Text" style="fill:currentColor;fill-opacity:0.12" x="28" y="0" width="4" height="1"/></g>
+  <g id="topright"><path class="ColorScheme-Background" style="fill:currentColor;fill-opacity:0.84" d="M32,0 A28,28 0 0 1 60,28 L32,28 Z"/><path class="ColorScheme-Text" style="fill:currentColor;fill-opacity:0.12" d="M32,0 A28,28 0 0 1 60,28 L59,28 A27,27 0 0 0 32,1 Z"/></g>
+  <g id="left"><rect class="ColorScheme-Background" style="fill:currentColor;fill-opacity:0.84" x="0" y="28" width="28" height="4"/><rect class="ColorScheme-Text" style="fill:currentColor;fill-opacity:0.12" x="0" y="28" width="1" height="4"/></g>
+  <rect id="center" class="ColorScheme-Background" style="fill:currentColor;fill-opacity:0.84" x="28" y="28" width="4" height="4"/>
+  <g id="right"><rect class="ColorScheme-Background" style="fill:currentColor;fill-opacity:0.84" x="32" y="28" width="28" height="4"/><rect class="ColorScheme-Text" style="fill:currentColor;fill-opacity:0.12" x="59" y="28" width="1" height="4"/></g>
+  <g id="bottomleft"><path class="ColorScheme-Background" style="fill:currentColor;fill-opacity:0.84" d="M0,32 L28,32 L28,60 A28,28 0 0 1 0,32 Z"/><path class="ColorScheme-Text" style="fill:currentColor;fill-opacity:0.12" d="M0,32 L1,32 A27,27 0 0 0 28,59 L28,60 A28,28 0 0 1 0,32 Z"/></g>
+  <g id="bottom"><rect class="ColorScheme-Background" style="fill:currentColor;fill-opacity:0.84" x="28" y="32" width="4" height="28"/><rect class="ColorScheme-Text" style="fill:currentColor;fill-opacity:0.12" x="28" y="59" width="4" height="1"/></g>
+  <g id="bottomright"><path class="ColorScheme-Background" style="fill:currentColor;fill-opacity:0.84" d="M32,32 L60,32 A28,28 0 0 1 32,60 Z"/><path class="ColorScheme-Text" style="fill:currentColor;fill-opacity:0.12" d="M60,32 A28,28 0 0 1 32,60 L32,59 A27,27 0 0 0 59,32 Z"/></g>
+  <g fill="#000000">
+    <path id="mask-topleft" d="M70,28 A28,28 0 0 1 98,0 L98,28 Z"/>
+    <rect id="mask-top" x="98" y="0" width="4" height="28"/>
+    <path id="mask-topright" d="M102,0 A28,28 0 0 1 130,28 L102,28 Z"/>
+    <rect id="mask-left" x="70" y="28" width="28" height="4"/>
+    <rect id="mask-center" x="98" y="28" width="4" height="4"/>
+    <rect id="mask-right" x="102" y="28" width="28" height="4"/>
+    <path id="mask-bottomleft" d="M70,32 L98,32 L98,60 A28,28 0 0 1 70,32 Z"/>
+    <rect id="mask-bottom" x="98" y="32" width="4" height="28"/>
+    <path id="mask-bottomright" d="M102,32 L130,32 A28,28 0 0 1 102,60 Z"/>
+  </g>
+  <g fill="#ff00ff">
+    <rect id="hint-left-margin" x="140" y="0" width="14" height="2"/>
+    <rect id="hint-right-margin" x="140" y="4" width="14" height="2"/>
+    <rect id="hint-top-margin" x="170" y="0" width="2" height="14"/>
+    <rect id="hint-bottom-margin" x="174" y="0" width="2" height="14"/>
+  </g>
+</svg>

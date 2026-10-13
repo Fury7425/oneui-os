@@ -34,7 +34,7 @@ Details, troubleshooting and the Samsung Settings → OneUI OS feature map are i
 
 ## Status
 
-Version 0.1. **Not build-tested yet:** the first Actions run is the real test. Still to do: pill-shaped Plasma Style, a One UI quick-settings panel, a Galaxy Book settings page, a live ISO, and Camera Share.
+Version 0.1. **Not build-tested yet:** the first Actions run is the real test. The theme files were checked on Fedora KDE 44 in a VM ([docs/ui-parity.md](docs/ui-parity.md)). Still to do: a One UI quick-settings panel, a Galaxy Book settings page, a live ISO, and Camera Share.
 
 ## Legal
 

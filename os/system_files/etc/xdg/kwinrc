@@ -1,3 +1,8 @@
+# three workspaces, like the mockup's left pill
+[Desktops]
+Number=3
+Rows=1
+
 [Plugins]
 blurEnabled=true
 

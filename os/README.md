@@ -44,7 +44,11 @@ os/
 ├─ mok.key                       PRIVATE module signing key (gitignored, back it up)
 └─ system_files/                 copied over / in the image
    ├─ etc/xdg/kdeglobals         default theme, fonts, auto dark mode (colours appended at build)
-   ├─ etc/xdg/{kwinrc,krunnerrc,ksplashrc,baloofilerc,kscreenlockerrc}
+   ├─ etc/xdg/{kwinrc,krunnerrc,ksplashrc,baloofilerc,kscreenlockerrc,kded5rc}
+   ├─ etc/xdg/autostart/oneui-os-firstlogin.desktop + usr/libexec/oneui-os-firstlogin
+   │                             first login: undo Plasma Setup's Fedora theme pick, apply OneUI OS + pills
+   ├─ usr/lib/plasmalogin/defaults.conf   login screen wallpaper (Plasma Login Manager)
+   ├─ usr/share/plasma/desktoptheme/oneui-os/   Plasma Style: pill panels, 28 px popups and cards
    ├─ etc/fonts/local.conf       same fonts in GTK and Flatpak apps
    ├─ usr/share/color-schemes/   OneUIOSLight/Dark, generated from your mockup's oklch tokens
    ├─ usr/share/plasma/look-and-feel/org.oneuios.{light,dark}.desktop/
@@ -179,26 +183,33 @@ Then install:
 
 ## 5. The UI, step by step (mockup → Plasma)
 
-What's already in the image and what's left:
+What's already in the image and what's left. "Checked" means seen working in a Fedora KDE 44 VM (Plasma 6.6.4)
+with only these files applied; the per-view detail and next steps are in [`docs/ui-parity.md`](../docs/ui-parity.md).
 
 | Mockup element | Plasma piece | Where | Status |
 |---|---|---|---|
-| Taskbar as three floating pills | 3 bottom panels, `lengthMode = "fit"`, floating (Plasma 6 default) | `layout.js` | Done |
-| Left pill: workspaces + live activities | Pager + Media Player | `layout.js` | Done (recording/timer chips: not yet) |
-| Centre pill: apps + pinned/running | Kickoff in grid mode + Icons-only Task Manager | `layout.js` | Done |
-| Right pill: status + clock | System Tray + Digital Clock | `layout.js` | Done |
-| Finder ("What are you looking for?") | Kickoff search; KRunner (Alt+Space) floating in the centre | `krunnerrc` | Done |
-| Glass and blur | KWin blur + adaptive panel opacity | `kwinrc` | Done |
-| Colours (your oklch tokens) | `OneUIOSLight/Dark.colors`, selection = ink like the mockup's black/white "on" state | `color-schemes/` | Done |
-| Font | Pretendard (Samsung's fonts can't be redistributed) | `build.sh`, `kdeglobals` | Done |
-| Dark mode on a schedule | Automatic global theme switching | `kdeglobals` | Done |
-| Big clock widget | Digital Clock on the desktop | `layout.js` | Done |
-| Weather / batteries / calendar cards | Weather Report, Battery and Brightness, Calendar widgets | Add widgets | Manual |
-| Pill/28/16 radius family | Plasma Style SVGs | see U2 | Manual |
-| Quick settings tiles + sliders | System tray popups today | see U3 | Next |
-| Notification pill stack | Plasma notifications (themed by colours; radius via Plasma Style) | see U2 | Partial |
-| DeX window buttons | Breeze, buttons minimise/maximise/close on the right | `kwinrc` | Close enough; Aurorae theme for exact |
-| Desktops overview | KWin Overview (Meta+W) | built in | Done |
+| Boot logo | Plymouth `bgrt` (Fedora's default): firmware logo + spinner | built in | Done (VM has no firmware logo to show) |
+| Login screen | Plasma Login Manager (replaced SDDM in F44) on the OneUI OS wallpaper | `usr/lib/plasmalogin/defaults.conf` | Checked |
+| First-boot setup | Plasma Setup + `hello` (rising multi-language greeting) and `galaxy` (One UI list card) pages; welcome screen wallpaper | `plasmasetup.*`, `build.sh` | Checked |
+| Setup's dark-mode switch | Applies Fedora's theme by name; first login swaps in OneUI OS light/dark + pills | `oneui-os-firstlogin` | Checked |
+| Fedora "Welcome" window | Turned off (KF6 kded still reads `kded5rc`) | `etc/xdg/kded5rc` | Checked |
+| Taskbar as three floating pills | 3 bottom panels, `lengthMode = "fit"`, `floating`, 56 px | `layout.js` | Close: pills, glass and float checked after a plasmashell restart; on brand-new accounts the VM showed no panels (open issue, see `docs/ui-parity.md`) |
+| Left pill: ✦ + workspaces + live activities | `org.oneuios.button` (✦, opens Overview), `org.oneuios.workspaces` (dots), `org.oneuios.liveactivities` (now playing chip with cover + EQ; red mic chip with timer) | `plasmoids/`, `layout.js` | Checked (timer chip: not yet) |
+| Centre pill: apps + pinned/running | Kickoff grid + Icons-only Task Manager | `layout.js` | Checked |
+| Right pill: bell · Wi-Fi/volume/battery · clock | Tray (app icons only) + Notifications (bell) + `org.oneuios.quicksettings` (status group, click = quick settings) + Digital Clock (click = calendar) | `layout.js` | Checked |
+| Pill / 28 px radius family, glass | Plasma Style `oneui-os` (panel, popups, cards; 1 px edge like the mockup's line token) | `desktoptheme/oneui-os` | Checked |
+| Big clock | `org.oneuios.bigclock`: date above, "09" over "41" in light 124 px | `plasmoids/`, `layout.js` | Checked |
+| Weather / batteries / calendar cards | Weather Report, `org.oneuios.batteries` (a ring per device), Calendar | `plasmoids/`, `layout.js` | Close (weather needs a location; calendar is a month grid) |
+| Text straight on the wallpaper (clock) | Complementary colours = ink on light in the light scheme | `OneUIOSLight.colors` | Checked |
+| Finder ("What are you looking for?") | KRunner floating in the centre, 28 px glass | `krunnerrc` | Close |
+| App drawer | Kickoff popup, grid, 28 px glass | `layout.js` | Close (sidebar + footer remain) |
+| Notification pill stack | Plasma notifications in 28 px glass | Plasma Style | Close (icon on the right, not a pill row) |
+| Quick settings tiles + sliders | `org.oneuios.quicksettings`: Wi-Fi/Bluetooth pills, 8 toggles (DND, dark mode, Quick Share, Multi Control, performance, eye comfort, screen recorder, lock), brightness/volume sliders, mic-in-use row | see U3 | Checked |
+| DeX window buttons | Breeze, minimise/maximise/close on the right | `kwinrc` | Close; Aurorae theme for exact |
+| Desktops overview | KWin Overview (Meta+W) | built in | Close |
+| Colours (your oklch tokens) | `OneUIOSLight/Dark.colors` | `color-schemes/` | Checked |
+| Font | Pretendard (Samsung's fonts can't be redistributed) | `build.sh`, `kdeglobals` | Checked |
+| Dark mode on a schedule | Automatic global theme switching | `kdeglobals` | Done (not exercised in the VM) |
 
 ### U1: Work live, then copy into files
 
@@ -211,34 +222,42 @@ cat ~/.config/plasma-org.kde.plasma.desktop-appletsrc   # panels and widgets
 
 Move system-wide defaults into `system_files/etc/xdg/<file>`, and panel or widget settings into `layout.js` as `writeConfig(...)` calls.
 
-### U2: Pill-shaped panels and notifications (Plasma Style)
+### U2: Plasma Style `oneui-os` (pills, popups, cards)
 
-Panel and popup shapes come from SVGs, not colours.
+`system_files/usr/share/plasma/desktoptheme/oneui-os/` holds only what differs from Breeze; everything else falls back to it.
+Three hand-written SVGs share one shape (28 px corners, glass fill in the colour scheme's Window colour, a 1 px edge in
+its text colour at 12 %): `widgets/panel-background.svg` (72 %), `dialogs/background.svg` (84 %, popups and
+notifications), `widgets/background.svg` (62 %, desktop cards). Both global themes select it in `contents/defaults`.
 
-```sh
-mkdir -p ~/.local/share/plasma/desktoptheme
-cp -r /usr/share/plasma/desktoptheme/default ~/.local/share/plasma/desktoptheme/oneui-os
-```
+Rules learned the hard way (each one hid the panels or the whole theme without an error message):
+- `metadata.json` needs `"X-Plasma-API": "5.0"`.
+- No double hyphen inside an XML comment: QtSvg rejects the whole file.
+- Put `class` and `fill` on every shape; QtSvg doesn't pass a group's colour class down.
+- Floating panels need `mask-*` elements, or they stay invisible at login.
 
-1. In `metadata.json`, set `Id` and `Name` to `oneui-os`.
-2. Open `widgets/panel-background.svgz`, `translucent/widgets/panel-background.svgz`, and `dialogs/background.svgz` in Inkscape.
-3. Make the corner elements (`topleft`, `topright`, `bottomleft`, `bottomright`, plus their `shadow-` and `mask-` versions) round with a radius of half the panel height (about 25 px for the 50 px panels) for full pills, and 28 px for popups. Keep the element IDs unchanged.
-4. Apply it via **System Settings → Colors & Themes → Plasma Style**.
-5. When you're happy, copy the folder to `system_files/usr/share/plasma/desktoptheme/oneui-os/` and set `name=oneui-os` under `[plasmarc][Theme]` in both `look-and-feel/*/contents/defaults`.
+Check an SVG before restarting plasmashell: `QT_QPA_PLATFORM=offscreen ksvgtopng 400 120 file.svg out.png`.
 
-### U3: One UI quick panel (next project)
+### U3: OneUI OS plasmoids
 
-Wi-Fi, Bluetooth, volume, brightness, and power profiles already live in the tray. The One UI-style tile grid would be one QML plasmoid (Plasma 6 API) placed in the right pill. Check store.kde.org for an existing "control centre" plasmoid before writing one.
+Small QML widgets in `system_files/usr/share/plasma/plasmoids/org.oneuios.*`, built only on Plasma's own backends
+(NetworkManager, BlueZ, PipeWire/PulseAudio, KWin, MPRIS, power-profiles, notifications):
 
-### U4: More desktop widgets
+| Plasmoid | What it is |
+|---|---|
+| `quicksettings` | Right pill status group; click opens the One UI quick panel |
+| `liveactivities` | Left pill chips: now playing (click = play/pause), microphone recording timer |
+| `workspaces` | Workspace dots; click or scroll switches desktop |
+| `button` | Round button running a command (✦ = Overview) |
+| `bigclock` | Desktop clock, hours over minutes |
+| `batteries` | Desktop card with a ring per battery (laptop, Bluetooth devices) |
 
-Add calls like these in `layout.js`:
+To try a change on a running system: copy the folder to `/usr/share/plasma/plasmoids/`, delete
+`~/.cache/plasmashell/qmlcache`, then `systemctl --user restart plasma-plasmashell`. Errors land in `journalctl --user`.
 
-```js
-desktop.addWidget("org.kde.plasma.weather", x, y, w, h)
-desktop.addWidget("org.kde.plasma.battery", x, y, w, h)   // laptop + Bluetooth devices (Buds) batteries
-desktop.addWidget("org.kde.plasma.calendar", x, y, w, h)
-```
+### U4: Desktop widgets
+
+`layout.js` places the mockup's left column (big clock, weather, batteries, calendar) at the mockup's coordinates.
+The weather card shows "Configure…" until the user picks a location.
 
 ---
 
@@ -312,12 +331,11 @@ desktop.addWidget("org.kde.plasma.calendar", x, y, w, h)
 
 ## 9. Not done yet (in priority order)
 
-1. **Not build-tested.** The first **Build image** run and a VM install are the real tests. The most likely failure points are the `kernel-devel` version match in `kmod.sh`, three panels sharing the bottom edge in `layout.js`, and the installer with its user step turned off (if Anaconda refuses to continue, remove `Users` from `disable` in `iso.toml`).
-2. Plasma Style with pill radii (U2).
-3. One UI quick panel plasmoid (U3).
-4. A "Galaxy Book" settings page for lid and USB-charging toggles and battery health, instead of `tee` commands.
-5. Live ISO (Universal Blue's Titanoboa) so people can try before installing. The Anaconda installer still shows Fedora artwork.
-6. Sign the image with cosign before sharing it widely.
+1. **Not build-tested.** The first **Build image** run and a VM install are the real tests. The most likely failure points are the `kernel-devel` version match in `kmod.sh` and the installer with its user step turned off (if Anaconda refuses to continue, remove `Users` from `disable` in `iso.toml`).
+2. One UI quick panel plasmoid (U3), and the other gaps listed in `docs/ui-parity.md`.
+3. A "Galaxy Book" settings page for lid and USB-charging toggles and battery health, instead of `tee` commands.
+4. Live ISO (Universal Blue's Titanoboa) so people can try before installing. The Anaconda installer still shows Fedora artwork.
+5. Sign the image with cosign before sharing it widely.
 
 ---
 

@@ -14,8 +14,18 @@ echo "04be351a74d6bf7d60c480a3087e51d185485d35a52023142af1df19eb8c428a  /tmp/pre
 sudo unzip -oj /tmp/pretendard.zip public/variable/PretendardVariable.ttf -d /usr/share/fonts/pretendard
 sudo fc-cache -f
 sudo sh -c 'cat /usr/share/color-schemes/OneUIOSLight.colors >> /etc/xdg/kdeglobals'
+sudo chmod 755 /usr/libexec/oneui-os-firstlogin
+LNF=/usr/share/plasma/look-and-feel
+sudo cp -r $LNF/org.oneuios.light.desktop/contents/layouts $LNF/org.oneuios.dark.desktop/contents/
+for d in images images_dark; do
+    for f in /usr/share/wallpapers/Default/contents/$d/3840x2160.*; do
+        if [ -e "$f" ]; then sudo ln -sf "/usr/share/wallpapers/OneUIOS/contents/$d/5120x2880.png" "$f"; fi
+    done
+done
 
 # The live user already has a desktop, so apply theme + three-pill layout the way a first login would.
+# Over ssh (installed test VM, before first boot) there is no desktop yet; Plasma Setup's new user gets it.
+[ -n "${WAYLAND_DISPLAY:-}" ] || exit 0
 plasma-apply-lookandfeel --apply org.oneuios.light.desktop --resetLayout
 
 echo "Done. Log out and back in (no password) so every app picks up the font."

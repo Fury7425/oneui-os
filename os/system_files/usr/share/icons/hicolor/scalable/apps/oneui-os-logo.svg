@@ -1,4 +1,24 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <circle cx="32" cy="32" r="30" fill="#18181e"/>
-  <path d="M32 14l4.2 13.8L50 32l-13.8 4.2L32 50l-4.2-13.8L14 32l13.8-4.2z" fill="#fff"/>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 64 64">
+  <!-- OneUI OS mark: warm-to-cool orb with two soft white sparkles. Original artwork, not a Samsung asset.
+       Gradients, paths and <use> only: QtSvg (KDE icon loader) has no filter support. -->
+  <defs>
+    <linearGradient id="warm" x1="0.3" y1="0" x2="0.7" y2="1">
+      <stop offset="0" stop-color="#ff7f32"/>
+      <stop offset="0.45" stop-color="#ffb48a"/>
+      <stop offset="1" stop-color="#c8d8f6"/>
+    </linearGradient>
+    <radialGradient id="cool" cx="0.72" cy="0.95" r="0.65">
+      <stop offset="0" stop-color="#1f6ff2"/>
+      <stop offset="0.45" stop-color="#3f8af4" stop-opacity="0.75"/>
+      <stop offset="1" stop-color="#7fb0f6" stop-opacity="0"/>
+    </radialGradient>
+    <!-- 4-point sparkle, tip radius 10: straight edges, rounded tips and waist -->
+    <path id="spark" d="M-0.59-8.62Q0-10 0.59-8.62L2.53-4.1Q3-3 4.1-2.53L8.62-0.59Q10 0 8.62 0.59L4.1 2.53Q3 3 2.53 4.1L0.59 8.62Q0 10-0.59 8.62L-2.53 4.1Q-3 3-4.1 2.53L-8.62 0.59Q-10 0-8.62-0.59L-4.1-2.53Q-3-3-2.53-4.1Z"/>
+  </defs>
+  <circle cx="32" cy="32" r="30" fill="url(#warm)"/>
+  <circle cx="32" cy="32" r="30" fill="url(#cool)"/>
+  <g fill="#fff">
+    <use xlink:href="#spark" transform="translate(30 34.5) scale(1.7)"/>
+    <use xlink:href="#spark" transform="translate(44.5 18.5) scale(0.62)"/>
+  </g>
 </svg>

@@ -3,7 +3,10 @@
 set -ouex pipefail
 
 cp -avf /ctx/system_files/. /
-chmod 755 /usr/libexec/galaxybook-setup
+chmod 755 /usr/libexec/galaxybook-setup /usr/libexec/oneui-os-firstlogin
+# Same three-pill layout for a first login in dark mode (one source file, copied at build time).
+cp -r /usr/share/plasma/look-and-feel/org.oneuios.light.desktop/contents/layouts \
+    /usr/share/plasma/look-and-feel/org.oneuios.dark.desktop/contents/
 
 ### Packages
 # papirus: rounded, colourful icons closest to One UI. jetbrains-mono: the terminal font from the mockup.
@@ -24,11 +27,12 @@ fc-cache -f /usr/share/fonts/pretendard
 ### Look: default colours must live in kdeglobals itself, or Qt apps start in Breeze until the theme is re-applied.
 cat /usr/share/color-schemes/OneUIOSLight.colors >>/etc/xdg/kdeglobals
 
-# Plasma Setup's welcome screen always shows Plasma's "Next" wallpaper; show ours instead.
+# Plasma Setup's welcome screen hardcodes wallpapers/Default/contents/images{,_dark}/3840x2160.jxl
+# (Fedora's wallpaper); point it at ours. Qt sniffs the PNG despite the .jxl name (checked in a F44 VM).
 for d in images images_dark; do
-    if [ -d "/usr/share/wallpapers/Next/contents/$d" ]; then
-        cp "/usr/share/wallpapers/OneUIOS/contents/$d/5120x2880.png" "/usr/share/wallpapers/Next/contents/$d/5120x2880.png"
-    fi
+    for f in /usr/share/wallpapers/Default/contents/$d/3840x2160.*; do
+        if [ -e "$f" ]; then ln -sf "/usr/share/wallpapers/OneUIOS/contents/$d/5120x2880.png" "$f"; fi
+    done
 done
 
 ### Branding. ID stays "fedora": bootc-image-builder and dnf resolve repos from it.

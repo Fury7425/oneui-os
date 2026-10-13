@@ -1,0 +1,12 @@
+[AdaptiveTransparency]
+enabled=true
+
+# the mockup's glass: blur(40px) saturate(180%)
+[ContrastEffect]
+enabled=true
+contrast=0.2
+intensity=1.0
+saturation=1.8
+
+[BlurBehindEffect]
+enabled=true

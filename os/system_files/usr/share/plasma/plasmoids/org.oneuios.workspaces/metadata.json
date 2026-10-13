@@ -1,0 +1,13 @@
+{
+    "KPackageStructure": "Plasma/Applet",
+    "KPlugin": {
+        "Authors": [{ "Name": "OneUI OS" }],
+        "Category": "Windows and Tasks",
+        "Description": "One UI workspace dots: the current desktop is a wide pill, desktops with windows are darker.",
+        "Icon": "user-desktop",
+        "Id": "org.oneuios.workspaces",
+        "License": "GPL-2.0-or-later",
+        "Name": "Workspace Dots"
+    },
+    "X-Plasma-API-Minimum-Version": "6.0"
+}

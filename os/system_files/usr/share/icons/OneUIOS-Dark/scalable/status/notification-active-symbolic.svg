@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-8 -8 40 40">
+  <!-- mockup .bell::after: 7 px --warn dot at the top right, clear of the bell's stroke -->
+  <style id="current-color-scheme">.ColorScheme-Text { color:#fcfcfc; }</style>
+  <path class="ColorScheme-Text" style="fill:none;stroke:currentColor;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round" d="M6 9a6 6 0 0112 0c0 6 2.5 8 2.5 8h-17S6 15 6 9M10 20.5h4"/>
+  <circle cx="22" cy="3.3" r="4.6" fill="#f66d67"/>
+</svg>

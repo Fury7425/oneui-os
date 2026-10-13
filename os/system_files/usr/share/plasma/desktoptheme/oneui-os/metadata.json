@@ -1,0 +1,12 @@
+{
+    "KPlugin": {
+        "Authors": [{ "Name": "OneUI OS" }],
+        "Description": "One UI / DeX shapes: pill panels, 28 px popups and cards, frosted glass. Anything not here falls back to Breeze.",
+        "EnabledByDefault": true,
+        "Id": "oneui-os",
+        "License": "GPL-2.0-or-later",
+        "Name": "OneUI OS",
+        "Version": "0.1"
+    },
+    "X-Plasma-API": "5.0"
+}
