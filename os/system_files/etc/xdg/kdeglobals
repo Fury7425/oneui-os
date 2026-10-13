@@ -10,7 +10,7 @@ AnimationDurationFactor=0.75
 widgetStyle=Breeze
 
 [Icons]
-Theme=Papirus
+Theme=OneUIOS
 
 [General]
 font=Pretendard Variable,10,-1,5,400,0,0,0,0,0,0,0,0,0,0,1

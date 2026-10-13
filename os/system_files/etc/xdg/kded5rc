@@ -1,0 +1,4 @@
+# Fedora's "Welcome to Fedora" window on first login. OneUI OS has its own first-boot pages (Plasma Setup).
+# KF6 kded still reads kded5rc.
+[Module-kded_plasma_welcome]
+autoload=false

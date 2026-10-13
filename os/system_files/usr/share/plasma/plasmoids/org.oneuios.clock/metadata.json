@@ -1,0 +1,13 @@
+{
+    "KPackageStructure": "Plasma/Applet",
+    "KPlugin": {
+        "Authors": [{ "Name": "OneUI OS" }],
+        "Category": "Date and Time",
+        "Description": "Taskbar clock from the OneUI OS mockup: bold time over the date, opens a calendar.",
+        "Icon": "preferences-system-time",
+        "Id": "org.oneuios.clock",
+        "License": "GPL-2.0-or-later",
+        "Name": "Taskbar Clock"
+    },
+    "X-Plasma-API-Minimum-Version": "6.0"
+}

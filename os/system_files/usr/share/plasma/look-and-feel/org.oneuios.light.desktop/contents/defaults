@@ -5,10 +5,10 @@ widgetStyle=Breeze
 ColorScheme=OneUIOSLight
 
 [kdeglobals][Icons]
-Theme=Papirus
+Theme=OneUIOS
 
 [plasmarc][Theme]
-name=default
+name=oneui-os
 
 [Wallpaper]
 Image=OneUIOS

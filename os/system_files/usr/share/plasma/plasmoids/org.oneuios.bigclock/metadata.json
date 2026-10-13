@@ -1,0 +1,13 @@
+{
+    "KPackageStructure": "Plasma/Applet",
+    "KPlugin": {
+        "Authors": [{ "Name": "OneUI OS" }],
+        "Category": "Date and Time",
+        "Description": "One UI desktop clock: date above, hours over minutes.",
+        "Icon": "preferences-system-time",
+        "Id": "org.oneuios.bigclock",
+        "License": "GPL-2.0-or-later",
+        "Name": "Big Clock"
+    },
+    "X-Plasma-API-Minimum-Version": "6.0"
+}

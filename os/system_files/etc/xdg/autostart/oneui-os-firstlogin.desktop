@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=OneUI OS first login
+Exec=/usr/libexec/oneui-os-firstlogin
+OnlyShowIn=KDE;
+NoDisplay=true
+X-KDE-autostart-phase=2

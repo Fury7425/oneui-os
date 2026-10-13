@@ -1,0 +1,13 @@
+{
+    "KPackageStructure": "Plasma/Applet",
+    "KPlugin": {
+        "Authors": [{ "Name": "OneUI OS" }],
+        "Category": "System Information",
+        "Description": "One UI batteries card: a ring per device, laptop first, then Bluetooth devices such as Galaxy Buds.",
+        "Icon": "battery-good",
+        "Id": "org.oneuios.batteries",
+        "License": "GPL-2.0-or-later",
+        "Name": "Batteries"
+    },
+    "X-Plasma-API-Minimum-Version": "6.0"
+}

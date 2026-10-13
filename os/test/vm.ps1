@@ -2,13 +2,17 @@
 # so you can try the OneUI OS look on real Plasma without building the image.
 # Run from an admin PowerShell:  powershell -ExecutionPolicy Bypass -File .\vm.ps1
 # Edited the theme? Shut the VM down and run this again; it refreshes the ONEUIOS disk.
-param([string]$Name = "oneui-os-test")
+#
+# -Persistent makes "oneui-os-dev" instead: a 64 GB disk to install Fedora KDE on, for iterating on the theme
+# over ssh with checkpoints. It boots the disk first and falls back to the ISO while the disk is empty.
+param([string]$Name, [switch]$Persistent)
 $ErrorActionPreference = "Stop"
+if (-not $Name) { $Name = if ($Persistent) { "oneui-os-dev" } else { "oneui-os-test" } }
 
 $os  = Split-Path $PSScriptRoot
 $dir = (Split-Path -Qualifier $os) + "\oneui-os-vm"
 $iso = "$dir\Fedora-KDE-Desktop-Live-44-1.7.x86_64.iso"
-$vhd = "$dir\oneui-os-files.vhdx"
+$vhd = if ($Persistent) { "$dir\$Name.vhdx" } else { "$dir\oneui-os-files.vhdx" }
 New-Item -ItemType Directory -Force $dir | Out-Null
 
 if (-not (Test-Path $iso)) {
@@ -22,12 +26,16 @@ if (-not (Test-Path $iso)) {
 $vm = Get-VM $Name -ErrorAction SilentlyContinue
 if ($vm -and $vm.State -ne "Off") { throw "Shut down '$Name' first." }
 
-# Files disk: FAT32 so the live session mounts it with no extra drivers. mok.key stays on Windows.
-if (Test-Path $vhd) { Remove-Item $vhd }
-$vol = New-VHD -Path $vhd -SizeBytes 512MB -Dynamic | Mount-VHD -Passthru | Initialize-Disk -PartitionStyle MBR -Passthru |
-    New-Partition -UseMaximumSize -AssignDriveLetter | Format-Volume -FileSystem FAT32 -NewFileSystemLabel ONEUIOS -Confirm:$false
-Get-ChildItem $os -Exclude mok.key | Copy-Item -Destination "$($vol.DriveLetter):\" -Recurse
-Dismount-VHD $vhd
+if ($Persistent) {
+    if (-not (Test-Path $vhd)) { New-VHD -Path $vhd -SizeBytes 64GB -Dynamic | Out-Null }
+} else {
+    # Files disk: FAT32 so the live session mounts it with no extra drivers. mok.key stays on Windows.
+    if (Test-Path $vhd) { Remove-Item $vhd }
+    $vol = New-VHD -Path $vhd -SizeBytes 512MB -Dynamic | Mount-VHD -Passthru | Initialize-Disk -PartitionStyle MBR -Passthru |
+        New-Partition -UseMaximumSize -AssignDriveLetter | Format-Volume -FileSystem FAT32 -NewFileSystemLabel ONEUIOS -Confirm:$false
+    Get-ChildItem $os -Exclude mok.key | Copy-Item -Destination "$($vol.DriveLetter):\" -Recurse
+    Dismount-VHD $vhd
+}
 
 if (-not $vm) {
     New-VM -Name $Name -Generation 2 -MemoryStartupBytes 6GB -SwitchName "Default Switch" -Path $dir -NoVHD | Out-Null
@@ -35,9 +43,15 @@ if (-not $vm) {
     Set-VMProcessor $Name -Count 4
     Set-VMFirmware $Name -SecureBootTemplate MicrosoftUEFICertificateAuthority
     Set-VMVideo $Name -ResolutionType Single -HorizontalResolution 1920 -VerticalResolution 1200 # the mockup's canvas
+    # Standard checkpoints keep the running session; no automatic checkpoint on every start.
+    Set-VM $Name -CheckpointType Standard -AutomaticCheckpointsEnabled $false
     Add-VMDvdDrive $Name -Path $iso
     Add-VMHardDiskDrive $Name -Path $vhd
-    Set-VMFirmware $Name -FirstBootDevice (Get-VMDvdDrive $Name)
+    if ($Persistent) {
+        Set-VMFirmware $Name -BootOrder (Get-VMHardDiskDrive $Name), (Get-VMDvdDrive $Name)
+    } else {
+        Set-VMFirmware $Name -FirstBootDevice (Get-VMDvdDrive $Name)
+    }
 }
 
 vmconnect.exe localhost $Name

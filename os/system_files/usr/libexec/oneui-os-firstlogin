@@ -1,0 +1,14 @@
+#!/usr/bin/sh
+# First login only. Plasma Setup's dark-mode switch applies Fedora's (upstream: Breeze's) global theme to
+# the new account, which also gives it Fedora's single panel. Swap in the matching OneUI OS theme and the
+# three-pill layout. Untouched accounts already use OneUI OS from /etc/xdg/kdeglobals and exit here.
+mark="${XDG_CONFIG_HOME:-$HOME/.config}/oneui-os-firstlogin"
+[ -e "$mark" ] && exit 0
+touch "$mark"
+
+case "$(kreadconfig6 --group KDE --key LookAndFeelPackage)" in
+    org.oneuios.*) exit 0 ;;
+    *dark*) theme=org.oneuios.dark.desktop ;;
+    *) theme=org.oneuios.light.desktop ;;
+esac
+exec plasma-apply-lookandfeel --apply "$theme" --resetLayout
