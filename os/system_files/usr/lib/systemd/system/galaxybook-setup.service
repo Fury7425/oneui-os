@@ -1,0 +1,11 @@
+[Unit]
+Description=Galaxy Book hardware setup (internal mic driver, speaker signing key)
+After=local-fs.target
+Before=plasma-setup.service display-manager.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/libexec/galaxybook-setup
+
+[Install]
+WantedBy=multi-user.target

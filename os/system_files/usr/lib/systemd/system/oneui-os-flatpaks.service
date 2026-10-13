@@ -1,0 +1,17 @@
+[Unit]
+Description=Install default apps: Quick Share (Packet) and Galaxy Buds manager
+Wants=network-online.target
+After=network-online.target flatpak-add-flathub-repos.service
+ConditionPathExists=!/var/lib/oneui-os/flatpaks-done
+
+[Service]
+Type=oneshot
+StateDirectory=oneui-os
+ExecStart=/usr/bin/flatpak install --system --noninteractive --or-update flathub io.github.nozwock.Packet me.timschneeberger.GalaxyBudsClient
+ExecStartPost=/usr/bin/touch /var/lib/oneui-os/flatpaks-done
+# First boot is usually offline until Wi-Fi is set up in Plasma Setup; keep retrying.
+Restart=on-failure
+RestartSec=60
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,3 @@
+# Search pops up centred like the mockup's finder, not glued to the top edge.
+[General]
+FreeFloating=true

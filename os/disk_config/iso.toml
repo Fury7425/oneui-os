@@ -1,0 +1,23 @@
+# bootc-image-builder config for the installer ISO.
+# After install, point the system at the published image so it gets updates (build-iso.yml fills in the owner).
+[customizations.installer.kickstart]
+contents = """
+%post
+bootc switch --mutate-in-place --transport registry ghcr.io/YOUR_GITHUB_USER/oneui-os:latest
+%end
+"""
+
+# No user or root spokes: Plasma Setup creates the account on first boot, like a new phone.
+[customizations.installer.modules]
+enable = [
+  "org.fedoraproject.Anaconda.Modules.Storage",
+  "org.fedoraproject.Anaconda.Modules.Runtime",
+  "org.fedoraproject.Anaconda.Modules.Network",
+  "org.fedoraproject.Anaconda.Modules.Security",
+  "org.fedoraproject.Anaconda.Modules.Services",
+  "org.fedoraproject.Anaconda.Modules.Timezone"
+]
+disable = [
+  "org.fedoraproject.Anaconda.Modules.Subscription",
+  "org.fedoraproject.Anaconda.Modules.Users"
+]

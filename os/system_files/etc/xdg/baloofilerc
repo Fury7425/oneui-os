@@ -1,0 +1,3 @@
+# Index file names only; full-content indexing burns CPU and battery for days after install.
+[General]
+only basic indexing=true

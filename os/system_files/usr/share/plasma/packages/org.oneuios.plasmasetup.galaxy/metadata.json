@@ -1,0 +1,13 @@
+{
+    "KPackageStructure": "KDE/PlasmaSetup",
+    "KPlugin": {
+        "Authors": [{ "Name": "OneUI OS" }],
+        "Description": "Where the Galaxy continuity features live, and the one-time speaker key step.",
+        "Id": "org.oneuios.plasmasetup.galaxy",
+        "License": "GPL-2.0-or-later",
+        "Name": "Galaxy features"
+    },
+    "NoDisplay": true,
+    "X-KDE-ParentApp": "org.kde.plasmasetup",
+    "X-KDE-Weight": 60
+}

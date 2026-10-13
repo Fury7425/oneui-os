@@ -1,0 +1,21 @@
+#!/usr/bin/bash
+# Galaxy Book fixes that depend on the exact laptop. Runs every boot; a no-op on anything that isn't a Samsung.
+grep -qi samsung /sys/class/dmi/id/sys_vendor || exit 0
+mkdir -p /var/lib/galaxybook /run/oneui-os
+
+# Book4 (Meteor Lake, CPU model 170): the internal mic only works with the SOF audio driver, not legacy HDA.
+# Applied once, effective from the next boot. To undo, delete /etc/modprobe.d/galaxybook-mic.conf.
+if grep -qm1 '^model[[:space:]]*: 170$' /proc/cpuinfo && [ ! -e /var/lib/galaxybook/mic-done ]; then
+    echo 'options snd-intel-dspcfg dsp_driver=3' >/etc/modprobe.d/galaxybook-mic.conf
+    touch /var/lib/galaxybook/mic-done
+fi
+
+# Speakers: our MAX98390 driver is signed with OneUI OS's key. With Secure Boot on, the firmware has to trust
+# that key once, so queue it; the user confirms on the next boot (blue MokManager screen, password "oneui-os").
+cert=/usr/share/oneui-os/mok.der
+if compgen -G '/sys/bus/acpi/devices/MAX98390:*' >/dev/null &&
+    mokutil --sb-state 2>/dev/null | grep -q 'SecureBoot enabled' &&
+    ! mokutil --test-key "$cert" 2>/dev/null | grep -q 'already enrolled'; then
+    mokutil --import "$cert" --hash-file /usr/share/oneui-os/mok.hash || true # fails harmlessly if already queued
+    touch /run/oneui-os/mok-pending # read by the "Galaxy features" page in Plasma Setup
+fi

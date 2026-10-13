@@ -1,0 +1,10 @@
+[Plugins]
+blurEnabled=true
+
+[Effect-blur]
+BlurStrength=12
+
+[org.kde.kdecoration2]
+library=org.kde.breeze
+ButtonsOnLeft=
+ButtonsOnRight=IAX

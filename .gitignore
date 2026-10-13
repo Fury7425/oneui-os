@@ -1,0 +1,5 @@
+# Dumps from Samsung's binaries, apps pulled from the phone, and third-party tools stay local
+recon/
+pulls/
+tools/
+prompts/

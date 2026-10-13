@@ -1,0 +1,4 @@
+# No Plasma-branded splash: firmware logo -> login -> desktop.
+[KSplash]
+Engine=none
+Theme=None

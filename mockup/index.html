@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="en" data-theme="light" data-view="desktop">
+<head>
+<meta charset="utf-8">
+<title>Galaxy OS — Desktop mockup (2880×1800)</title>
+<!--
+  Panel: 2880×1800 (Galaxy Book 14"/16", 16:10). Default scale 150% → 1920×1200 logical px, which lands near
+  macOS defaults on comparable panels (14" ≈ 161 px/in logical, 16" ≈ 141). Layout is anchored, so ?scale=1.75 / 2 also work.
+  URL params:  ?theme=light|dark   &view=desktop|finder|drawer|notifs|overview   &scale=1.5|1.75|2
+  System (One UI 8 phone + new DeX desktop mode + Samsung Settings for PC):
+    - bottom taskbar as three floating pills: workspaces + live activities | search · apps · pinned · running | status tray
+    - live activities (media, recording, timers) are status chips bottom-left, like One UI's status-bar chips
+    - panels (quick panel, notifications, finder, app drawer) open upward from the taskbar
+    - one material: frosted glass; grouped list cards inside windows, inset dividers
+    - one radius family: pill / 28 / 16
+    - active = "on" fill (ink in light, white in dark)
+    - colour only in app icons, Settings category circles and warnings
+-->
+<link rel="stylesheet" href="tokens-and-components.css">
+</head>
+<body>
+<div id="screen">
+  <div class="wall">
+    <svg viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice">
+      <path d="M560 -80 C 420 260, 1080 380, 860 980" stroke="var(--ribbon-shade)" stroke-width="300" fill="none" opacity=".55"/>
+      <path d="M600 -80 C 470 250, 1060 400, 820 980" stroke="var(--ribbon)" stroke-width="170" fill="none"/>
+      <path d="M690 -80 C 600 220, 1030 430, 780 980" stroke="var(--ribbon-shade)" stroke-width="40" fill="none" opacity=".5"/>
+    </svg>
+  </div>
+
+  <!-- ===== WIDGETS ===== -->
+  <aside class="widgets">
+    <div class="clock">
+      <div class="d">Monday, October 12</div>
+      <div class="hm">09<br>41</div>
+    </div>
+    <div class="card glass">
+      <h4><svg class="ico sm" viewBox="0 0 24 24"><path d="M12 22s7-7 7-12a7 7 0 00-14 0c0 5 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg>Seoul</h4>
+      <div class="wx">
+        <div class="tmp">18°</div>
+        <div class="cond">
+          <svg class="ico" viewBox="0 0 24 24"><path d="M8 3v1.5M3.5 8H2M4.8 4.8l1 1M13.5 6.5A4 4 0 006 9.5"/><path d="M8 20h9a4 4 0 00.5-8 5.5 5.5 0 00-10.6 1.5A3.3 3.3 0 008 20z"/></svg>
+          <span>Partly cloudy · 21° / 11°</span>
+        </div>
+      </div>
+      <div class="hourly">
+        <div>Now<svg class="ico sm" viewBox="0 0 24 24"><path d="M8 20h9a4 4 0 00.5-8 5.5 5.5 0 00-10.6 1.5A3.3 3.3 0 008 20z"/></svg><b>18°</b></div>
+        <div>11<svg class="ico sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 3v1.5M12 19.5V21M3 12h1.5M19.5 12H21M5.6 5.6l1 1M17.4 17.4l1 1M5.6 18.4l1-1M17.4 6.6l1-1"/></svg><b>20°</b></div>
+        <div>13<svg class="ico sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 3v1.5M12 19.5V21M3 12h1.5M19.5 12H21M5.6 5.6l1 1M17.4 17.4l1 1M5.6 18.4l1-1M17.4 6.6l1-1"/></svg><b>21°</b></div>
+        <div>15<svg class="ico sm" viewBox="0 0 24 24"><path d="M8 20h9a4 4 0 00.5-8 5.5 5.5 0 00-10.6 1.5A3.3 3.3 0 008 20z"/></svg><b>19°</b></div>
+        <div>17<svg class="ico sm" viewBox="0 0 24 24"><path d="M8 16h9a4 4 0 00.5-8 5.5 5.5 0 00-10.6 1.5A3.3 3.3 0 008 16zM9 19l-1 2M13 19l-1 2M17 19l-1 2"/></svg><b>16°</b></div>
+      </div>
+    </div>
+    <div class="card glass">
+      <h4>Batteries</h4>
+      <div class="rings">
+        <div><div class="ring" style="--p:82"><svg class="ico" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="11" rx="2"/><path d="M2 19h20"/></svg></div><span>82%</span><small>Book</small></div>
+        <div><div class="ring" style="--p:64"><svg class="ico" viewBox="0 0 24 24"><rect x="7" y="3" width="10" height="18" rx="3"/></svg></div><span>64%</span><small>S26 Ultra</small></div>
+        <div><div class="ring" style="--p:95"><svg class="ico" viewBox="0 0 24 24"><path d="M8 4a3 3 0 00-3 3v3a3 3 0 003 3h1v6M16 4a3 3 0 013 3v3a3 3 0 01-3 3h-1v6"/></svg></div><span>95%</span><small>Buds3 Pro</small></div>
+        <div><div class="ring low" style="--p:18"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5.5"/><path d="M9 6.5L10 3h4l1 3.5M9 17.5l1 3.5h4l1-3.5"/></svg></div><span>18%</span><small>Watch8</small></div>
+      </div>
+    </div>
+    <div class="card glass">
+      <h4>Today · 2 events</h4>
+      <div class="ev"><i style="background:oklch(0.62 0.18 258)"></i><div><b>Design review</b><span>10:30 – 11:00 · Meet</span></div><time>in 49 min</time></div>
+      <div class="ev"><i style="background:oklch(0.66 0.17 148)"></i><div><b>Gym</b><span>18:00 – 19:00</span></div></div>
+    </div>
+  </aside>
+
+  <!-- ===== TILED WINDOWS ===== -->
+  <main class="tiles">
+
+  <!-- ===== SETTINGS ===== -->
+  <section class="win settings glass strong">
+    <div class="titlebar">
+      <span class="appi" style="background:oklch(0.52 0.015 270)"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.5"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3"/></svg></span>
+      <svg class="ico sm" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5"/></svg>
+      <div class="ctls" data-ctls></div>
+    </div>
+    <div class="body">
+      <nav class="side">
+        <div class="me"><div><b>Robin</b><span>Samsung account</span></div><span class="avatar">R</span></div>
+        <div class="dash"></div>
+        <a class="nav on"><span class="cat k-blue"><svg class="ico" viewBox="0 0 24 24"><path d="M2.5 9a14 14 0 0119 0M6 12.5a9 9 0 0112 0M9.5 16a4 4 0 015 0"/><circle cx="12" cy="19.3" r="1.2" fill="currentColor" stroke="none"/></svg></span><div><b>Connections</b><span>Wi-Fi · Bluetooth</span></div></a>
+        <a class="nav"><span class="cat k-blue"><svg class="ico" viewBox="0 0 24 24"><rect x="3" y="5" width="12" height="9" rx="1.5"/><rect x="16" y="9" width="5" height="10" rx="1.5"/></svg></span><div><b>Connected devices</b><span>Quick Share · Multi Control</span></div></a>
+        <div class="dash"></div>
+        <a class="nav"><span class="cat k-violet"><svg class="ico" viewBox="0 0 24 24"><path d="M4 9.5v5h3.5L12 18V6L7.5 9.5zM16 9.5a3.5 3.5 0 010 5"/></svg></span><div><b>Sound</b><span>Dolby Atmos</span></div></a>
+        <a class="nav"><span class="cat k-orange"><svg class="ico" viewBox="0 0 24 24"><path d="M6 9a6 6 0 0112 0c0 6 2.5 8 2.5 8h-17S6 15 6 9M10 20.5h4"/></svg></span><div><b>Notifications</b><span>Do not disturb</span></div></a>
+        <a class="nav"><span class="cat k-lime"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4"/></svg></span><div><b>Display</b><span>Screen mode</span></div></a>
+        <div class="dash"></div>
+        <a class="nav"><span class="cat k-indigo"><svg class="ico" viewBox="0 0 24 24"><path d="M12 3l7.5 3v5.5c0 4.6-3.2 8-7.5 9.5-4.3-1.5-7.5-4.9-7.5-9.5V6z"/></svg></span><div><b>Security and privacy</b><span>Camera and mic block</span></div></a>
+        <a class="nav"><span class="cat k-green"><svg class="ico" viewBox="0 0 24 24"><rect x="7" y="4" width="10" height="17" rx="2.5"/><path d="M10 2.5h4M10 15h4M10 11.5h4"/></svg></span><div><b>Battery</b><span>Protection · Performance</span></div></a>
+      </nav>
+      <div class="pane">
+        <div class="ptitle"><svg class="ico" viewBox="0 0 24 24"><path d="M4 5v14M20 12H9m0 0l5-5m-5 5l5 5"/></svg>Connections</div>
+        <div class="sec">Bluetooth</div>
+        <div class="group">
+          <div class="li"><div class="tx"><b>Bluetooth</b><span>Galaxy Buds3 Pro connected</span></div><i class="vr"></i><span class="sw on"></span></div>
+          <div class="li"><div class="tx"><b>Quick pairing</b><span>Show a pop-up when Galaxy Buds nearby are ready to connect.</span></div><span class="sw on"></span></div>
+        </div>
+        <div class="sec">Wi-Fi</div>
+        <div class="group">
+          <div class="li" style="--inset:34px"><svg class="ico" viewBox="0 0 24 24"><path d="M2.5 9a14 14 0 0119 0M6 12.5a9 9 0 0112 0M9.5 16a4 4 0 015 0"/><circle cx="12" cy="19.3" r="1.2" fill="currentColor" stroke="none"/></svg><div class="tx"><b>Galaxy_5G</b><span>Connected · Wi-Fi 7</span></div><span class="btn">Share</span><span class="btn">QR code</span></div>
+          <div class="li" style="--inset:34px"><svg class="ico" viewBox="0 0 24 24"><path d="M7 18a4.5 4.5 0 01-.6-9A6.5 6.5 0 0119 10a4 4 0 01-1 8z"/></svg><div class="tx"><b>Sync with Samsung Cloud</b><span>Saved networks on all your Galaxy devices</span></div><i class="vr"></i><span class="sw"></span></div>
+        </div>
+        <div class="sec">More</div>
+        <div class="group">
+          <div class="li"><div class="tx"><b>Ethernet</b><span>Not connected</span></div><svg class="ico sm" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></div>
+          <div class="li"><div class="tx"><b>VPN</b><span>Off</span></div><svg class="ico sm" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== QUICK SHARE ===== -->
+  <section class="win qs glass strong">
+    <div class="titlebar">
+      <span class="appi" style="background:oklch(0.68 0.13 230)"><svg class="ico" viewBox="0 0 24 24"><path d="M7 10h10l-3-3M17 14H7l3 3"/></svg></span>
+      <span>Quick Share</span>
+      <div class="ctls" data-ctls></div>
+    </div>
+    <div class="body">
+      <div class="qshead"><b>Robin's Galaxy Book</b>
+        <span class="c xs ghost"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 11v5M12 8v.01"/></svg></span>
+        <span class="c xs ghost"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="5.5" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="12" cy="18.5" r="1" fill="currentColor"/></svg></span></div>
+      <div class="who">Who can share with me<span class="chip">Contacts only<svg class="ico sm" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5"/></svg></span></div>
+      <div class="nearby">
+        <div class="scan"><i></i><i></i><i></i>Looking for nearby devices…</div>
+        <div class="devs">
+          <div class="dev"><span class="c"><svg class="ico" viewBox="0 0 24 24"><rect x="7" y="3" width="10" height="18" rx="3"/></svg></span><b>Galaxy S26 Ultra</b><span>Robin</span></div>
+          <div class="dev"><span class="c"><svg class="ico" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2.5"/></svg></span><b>Galaxy Tab S10</b><span>Mina</span></div>
+          <div class="dev"><span class="c"><svg class="ico" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="12" rx="2"/><path d="M8 21h8"/></svg></span><b>Neo QLED</b><span>Living room</span></div>
+        </div>
+        <div class="recent"><div class="h">Recent</div>
+          <div class="xfer"><i class="thumb" style="background:oklch(0.7 0.09 40)"></i><div><b>IMG_2041.jpg + 2 more</b><span>From Galaxy S26 Ultra · now</span></div></div>
+          <div class="xfer"><i class="thumb" style="background:oklch(0.62 0.05 260)"></i><div><b>01-Samsung-Settings.md</b><span>To Galaxy Tab S10 · 1 h</span></div></div>
+        </div>
+      </div>
+      <span class="btn qr"><svg class="ico sm" viewBox="0 0 24 24"><rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><path d="M14 14h2v2h-2zM18 18h2v2h-2zM14 18h2M18 14h2"/></svg>QR code or link</span>
+    </div>
+  </section>
+
+  <!-- ===== TERMINAL ===== -->
+  <section class="win term glass strong">
+    <div class="titlebar">
+      <span class="appi" style="background:oklch(0.24 0.012 285)"><svg class="ico" viewBox="0 0 24 24"><path d="M6 16l5-4-5-4M13 17h5"/></svg></span>
+      <span>robin@galaxybook: ~</span>
+      <div class="ctls" data-ctls></div>
+    </div>
+    <div class="body">
+<pre class="lg">   .-*****-.
+ .*  .---.  *.
+*   /  ✦  \   *
+*  |  .-.  |  *
+*   \ '-' /   *
+ '*. '---' .*'
+    '-***-'</pre>
+<pre><span class="k">OS</span>      Galaxy OS 0.1 "Andromeda"
+<span class="k">Kernel</span>  6.17.2-galaxy
+<span class="k">Host</span>    Galaxy Book (NT940XGQ)
+<span class="k">Shell</span>   One Shell · Wayland
+<span class="k">Display</span> 2880×1800 @ 120 Hz [<span class="scale-name">1.5</span>x]
+<span class="k">Theme</span>   One UI <span class="theme-name">Light</span>
+<div class="ramp"><i style="opacity:1"></i><i style="opacity:.8"></i><i style="opacity:.62"></i><i style="opacity:.46"></i><i style="opacity:.32"></i><i style="opacity:.2"></i><i style="opacity:.1"></i></div></pre>
+      <div class="prompt">❯ ~ <span class="tcur"></span></div>
+      <div class="split"></div>
+      <div class="mon" data-mon></div>
+    </div>
+  </section>
+  </main>
+
+  <!-- ===== QUICK PANEL (view=desktop) ===== -->
+  <div class="pop qp glass">
+    <div class="qhead">
+      <b>Quick settings</b>
+      <div class="btns">
+        <span class="c xs ghost"><svg class="ico" viewBox="0 0 24 24"><path d="M4 20h4L19 9a2.8 2.8 0 00-4-4L4 16z"/></svg></span>
+        <span class="c xs ghost"><svg class="ico" viewBox="0 0 24 24"><path d="M12 3v9M17.7 7a8 8 0 11-11.4 0"/></svg></span>
+        <span class="c xs ghost"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2.5l1.6 2.6 3-.6.6 3 2.6 1.6-1.4 2.9 1.4 2.9-2.6 1.6-.6 3-3-.6L12 21.5l-1.6-2.6-3 .6-.6-3-2.6-1.6 1.4-2.9-1.4-2.9 2.6-1.6.6-3 3 .6z"/></svg></span>
+      </div>
+    </div>
+    <div class="wide"><span class="c on"><svg class="ico" viewBox="0 0 24 24" stroke-width="2.1"><path d="M2.5 9a14 14 0 0119 0M6 12.5a9 9 0 0112 0M9.5 16a4 4 0 015 0"/><circle cx="12" cy="19.3" r="1.2" fill="currentColor" stroke="none"/></svg></span><div><b>Wi-Fi</b><span>Galaxy_5G</span></div></div>
+    <div class="wide"><span class="c on"><svg class="ico" viewBox="0 0 24 24"><path d="M7 7l10 10-5 5V2l5 5L7 17"/></svg></span><div><b>Bluetooth</b><span>Buds3 Pro</span></div></div>
+    <div class="tgroup">
+      <div class="tog"><span class="c"><svg class="ico" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 019.5 4 8 8 0 1020 14.5z"/></svg></span>Do not disturb</div>
+      <div class="tog"><span class="c dark-mode"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 010 16z" fill="currentColor"/></svg></span>Dark mode</div>
+      <div class="tog"><span class="c on"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M8.5 10.5h7l-2.5-2.5M15.5 13.5h-7l2.5 2.5"/></svg></span>Quick Share</div>
+      <div class="tog"><span class="c on"><svg class="ico" viewBox="0 0 24 24"><rect x="3" y="5" width="12" height="9" rx="1.5"/><rect x="17" y="8" width="4.5" height="10" rx="1.5"/><path d="M6 18h6M9 14v4"/></svg></span>Multi Control</div>
+      <div class="tog"><span class="c"><svg class="ico" viewBox="0 0 24 24"><path d="M2.5 12h3.5l2.5-6.5 4 13 2.5-6.5h6.5"/></svg></span>Performance</div>
+      <div class="tog"><span class="c"><svg class="ico" viewBox="0 0 24 24"><rect x="3" y="7" width="13" height="10" rx="2"/><path d="M16 10.5l5-3v9l-5-3"/></svg></span>Camera Share</div>
+      <div class="tog"><span class="c"><svg class="ico" viewBox="0 0 24 24"><path d="M4 8V5.5A1.5 1.5 0 015.5 4H8M16 4h2.5A1.5 1.5 0 0120 5.5V8M20 16v2.5a1.5 1.5 0 01-1.5 1.5H16M8 20H5.5A1.5 1.5 0 014 18.5V16"/><circle cx="12" cy="12" r="3" fill="currentColor"/></svg></span>Screen recorder</div>
+      <div class="tog"><span class="c"><svg class="ico" viewBox="0 0 24 24"><rect x="5" y="10.5" width="14" height="10" rx="2.5"/><path d="M8 10.5V8a4 4 0 018 0v2.5"/></svg></span>Lock</div>
+      <i class="handle"></i>
+    </div>
+    <div class="hs"><div class="f" style="width:58%"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 3v1.5M12 19.5V21M3 12h1.5M19.5 12H21M5.6 5.6l1 1M17.4 17.4l1 1M5.6 18.4l1-1M17.4 6.6l1-1"/></svg></div></div>
+    <div class="hs"><div class="f" style="width:38%"><svg class="ico" viewBox="0 0 24 24"><path d="M4 9.5v5h3.5L12 18V6L7.5 9.5zM16 9.5a3.5 3.5 0 010 5"/></svg></div><svg class="ico more" viewBox="0 0 24 24"><circle cx="12" cy="5.5" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="12" cy="18.5" r="1" fill="currentColor"/></svg></div>
+    <div class="qrow">
+      <span class="btn"><svg class="ico sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="3"/></svg>Media output</span>
+      <span class="btn"><svg class="ico sm" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="12" rx="2"/><path d="M8 21h8"/></svg>Neo QLED · Off</span>
+    </div>
+    <div class="privacy"><i></i>Microphone in use by Camera Share</div>
+  </div>
+
+  <!-- ===== NOTIFICATIONS (view=notifs) ===== -->
+  <div class="pop notifs" data-notifs></div>
+
+  <!-- ===== FINDER (view=finder) ===== -->
+  <div class="pop finder glass">
+    <div class="fsec"><div class="panel-title">Suggested apps</div><div class="sugg" data-apps="files internet gallery notes terminal settings music"></div></div>
+    <div class="fsec">
+      <div class="panel-title">Settings topics</div>
+      <div class="chips">
+        <span class="chip"><svg class="ico" viewBox="0 0 24 24"><path d="M12 3l1.9 5.8L20 10l-5 3.6L16.5 20 12 16.6 7.5 20 9 13.6 4 10l6.1-1.2z"/></svg>Galaxy AI</span>
+        <span class="chip"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M9 15.5v-7l6 7v-7"/></svg>What's new</span>
+        <span class="chip"><svg class="ico" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M4 15l4.5-4.5L14 16M13 13l2-2 5 5"/></svg>Wallpaper and style</span>
+        <span class="chip"><svg class="ico" viewBox="0 0 24 24"><path d="M12 3a6 6 0 00-3.5 10.9V17h7v-3.1A6 6 0 0012 3zM9.5 20.5h5"/></svg>Something's wrong</span>
+        <span class="chip"><svg class="ico" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 019.5 4 8 8 0 1020 14.5z"/></svg>Night</span>
+      </div>
+    </div>
+    <div class="fsec">
+      <div class="panel-title">Recent searches<a>Clear all</a></div>
+      <div class="chips" data-recent="kernel|Quick Share|Wi-Fi 7|terminal theme|Multi Control"></div>
+    </div>
+    <div class="field"><i class="caret"></i>What are you looking for?<span class="c"><svg class="ico" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0013 0M12 17.5V21"/></svg></span></div>
+  </div>
+
+  <!-- ===== APP DRAWER (view=drawer) ===== -->
+  <div class="pop drawer glass">
+    <div class="dhead"><b>Apps</b><span>29 apps</span>
+      <div class="btns"><span class="c xs"><svg class="ico" viewBox="0 0 24 24"><path d="M4 6h16M7 12h10M10 18h4"/></svg></span><span class="c xs"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="5.5" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="12" cy="18.5" r="1" fill="currentColor"/></svg></span></div></div>
+    <div class="dscroll"><div class="dgrid" data-apps="account ai calculator calendar camera camshare care clock cloud contacts files gallery health internet knox messages music notes phone recorder settings share store terminal things update wallet weather video"></div></div>
+    <div class="dfoot"><div class="field"><svg class="ico" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/></svg>Search apps</div></div>
+  </div>
+
+  <!-- ===== WORKSPACE OVERVIEW (view=overview) ===== -->
+  <div class="pop overview">
+    <span class="chip ovchip">3 apps open</span>
+    <div class="ovtop">
+      <div class="strip glass">
+        <div class="desk"><div class="mini"><i style="left:30px;top:16px;width:70px;height:46px"></i></div>Desktop 1</div>
+        <div class="desk cur"><div class="mini"><i style="left:33px;top:7px;width:75px;height:54px"></i><i style="left:33px;top:63px;width:75px;height:22px"></i><i style="left:4px;top:7px;width:26px;height:68px;background:transparent;box-shadow:none"></i></div>Desktop 2</div>
+        <div class="desk"><div class="mini"></div>Desktop 3</div>
+        <span class="c"><svg class="ico" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span>
+      </div>
+    </div>
+    <div class="frame"><span class="chip lbl">Desktop 2</span><span class="c xs x"><svg class="ico" viewBox="0 0 24 24"><path d="M7 7l10 10M17 7L7 17"/></svg></span><div class="stage" data-stage></div></div>
+  </div>
+
+  <!-- ===== TASKBAR ===== -->
+  <footer class="taskbar">
+    <div class="pill glass">
+      <span class="logo"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.6L22 12l-7.6 2.4L12 22l-2.4-7.6L2 12l7.6-2.4z"/></svg></span>
+      <div class="ws"><i class="busy"></i><i class="cur"></i><i></i></div>
+      <i class="vr"></i>
+      <span class="live media"><span class="art"></span><b>Starboy</b><span class="eq"><i></i><i></i><i></i></span></span>
+      <span class="live rec"><svg class="ico sm" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3" fill="currentColor"/><path d="M5.5 11a6.5 6.5 0 0013 0M12 17.5V21"/></svg><b>00:04</b></span>
+      <span class="live"><svg class="ico sm" viewBox="0 0 24 24"><circle cx="12" cy="13.5" r="7"/><path d="M12 10v3.5M10 3h4M18 7l1.5-1.5"/></svg><b>24:13</b></span>
+    </div>
+    <div class="pill glass center">
+      <span class="c xs ghost" data-for="finder"><svg class="ico" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/></svg></span>
+      <span class="c xs ghost" data-for="drawer"><svg viewBox="0 0 24 24" fill="currentColor" style="width:17px;height:17px"><circle cx="5" cy="5" r="1.8"/><circle cx="12" cy="5" r="1.8"/><circle cx="19" cy="5" r="1.8"/><circle cx="5" cy="12" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="19" cy="12" r="1.8"/><circle cx="5" cy="19" r="1.8"/><circle cx="12" cy="19" r="1.8"/><circle cx="19" cy="19" r="1.8"/></svg></span>
+      <i class="vr"></i>
+      <span data-apps="files internet gallery messages camera calendar"></span>
+      <i class="vr"></i>
+      <span data-apps="settings:cur terminal:run music:run"></span>
+    </div>
+    <div class="pill glass tray">
+      <span class="bell" data-for="notifs"><svg class="ico" viewBox="0 0 24 24" stroke-width="2.1"><path d="M6 9a6 6 0 0112 0c0 6 2.5 8 2.5 8h-17S6 15 6 9M10 20.5h4"/></svg></span>
+      <div class="grp" data-for="desktop">
+        <svg class="ico" viewBox="0 0 24 24" stroke-width="2.2"><path d="M2.5 9a14 14 0 0119 0M6 12.5a9 9 0 0112 0M9.5 16a4 4 0 015 0"/><circle cx="12" cy="19.3" r="1.2" fill="currentColor" stroke="none"/></svg>
+        <svg class="ico" viewBox="0 0 24 24" stroke-width="2.2"><path d="M4 9.5v5h3.5L12 18V6L7.5 9.5zM16 9.5a3.5 3.5 0 010 5"/></svg>
+        <span class="batt">82</span>
+      </div>
+      <i class="vr"></i>
+      <div class="when"><b>9:41</b><span>Mon 12</span></div>
+    </div>
+  </footer>
+</div>
+
+<script src="apps.js"></script>
+<script src="main.js"></script>
+</body>
+</html>

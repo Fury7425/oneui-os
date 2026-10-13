@@ -1,0 +1,14 @@
+# From Andycodeman/samsung-galaxy-book-linux-fixes (speaker-fix), script moved to /usr/libexec for the read-only /usr.
+[Unit]
+Description=Create I2C devices for MAX98390 HDA speaker amplifiers
+After=systemd-modules-load.service
+Before=sound.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/libexec/max98390-hda-i2c-setup start
+ExecStop=/usr/libexec/max98390-hda-i2c-setup stop
+
+[Install]
+WantedBy=sound.target

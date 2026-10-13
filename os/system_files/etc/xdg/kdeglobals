@@ -1,0 +1,24 @@
+# System-wide Plasma defaults. build.sh appends the full OneUIOSLight colour scheme below.
+[KDE]
+LookAndFeelPackage=org.oneuios.light.desktop
+DefaultLightLookAndFeel=org.oneuios.light.desktop
+DefaultDarkLookAndFeel=org.oneuios.dark.desktop
+# One UI's "Dark mode: as scheduled", sunset to sunrise
+AutomaticLookAndFeel=true
+# One UI motion is quick and short
+AnimationDurationFactor=0.75
+widgetStyle=Breeze
+
+[Icons]
+Theme=Papirus
+
+[General]
+font=Pretendard Variable,10,-1,5,400,0,0,0,0,0,0,0,0,0,0,1
+menuFont=Pretendard Variable,10,-1,5,400,0,0,0,0,0,0,0,0,0,0,1
+smallestReadableFont=Pretendard Variable,8,-1,5,400,0,0,0,0,0,0,0,0,0,0,1
+toolBarFont=Pretendard Variable,10,-1,5,400,0,0,0,0,0,0,0,0,0,0,1
+fixed=JetBrains Mono,10,-1,5,400,0,0,0,0,0,0,0,0,0,0,1
+
+[WM]
+activeFont=Pretendard Variable,10,-1,5,600,0,0,0,0,0,0,0,0,0,0,1
+

@@ -1,0 +1,41 @@
+name: Build ISO
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: read
+
+jobs:
+  iso:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Free disk space
+        uses: ublue-os/remove-unwanted-software@695eb75bc387dbcd9685a8e72d23439d8686cba6
+        with:
+          remove-codeql: true
+
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+
+      - name: Point the installer at this repo's image
+        run: |
+          echo "IMAGE=ghcr.io/${GITHUB_REPOSITORY_OWNER,,}/oneui-os:latest" >> "$GITHUB_ENV"
+          sed -i "s|ghcr.io/YOUR_GITHUB_USER|ghcr.io/${GITHUB_REPOSITORY_OWNER,,}|" os/disk_config/iso.toml
+
+      - name: Build ISO
+        id: build
+        uses: osbuild/bootc-image-builder-action@8661cd3832544ad68c12dcde8681b13ab0f56a8d
+        with:
+          builder-image: quay.io/centos-bootc/bootc-image-builder:latest
+          config-file: ./os/disk_config/iso.toml
+          image: ${{ env.IMAGE }}
+          types: anaconda-iso
+          additional-args: --use-librepo=True
+
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: oneui-os-iso
+          path: ${{ steps.build.outputs.output-directory }}
+          if-no-files-found: error
+          compression-level: 0

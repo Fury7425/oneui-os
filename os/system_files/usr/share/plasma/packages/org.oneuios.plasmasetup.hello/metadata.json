@@ -1,0 +1,13 @@
+{
+    "KPackageStructure": "KDE/PlasmaSetup",
+    "KPlugin": {
+        "Authors": [{ "Name": "OneUI OS" }],
+        "Description": "Galaxy-style greeting shown before language selection.",
+        "Id": "org.oneuios.plasmasetup.hello",
+        "License": "GPL-2.0-or-later",
+        "Name": "Welcome"
+    },
+    "NoDisplay": true,
+    "X-KDE-ParentApp": "org.kde.plasmasetup",
+    "X-KDE-Weight": -10
+}
