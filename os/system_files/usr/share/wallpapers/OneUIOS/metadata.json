@@ -1,8 +1,8 @@
 {
     "KPlugin": {
-        "Authors": [{ "Name": "OneUI OS" }],
+        "Authors": [{ "Name": "One UI" }],
         "Id": "OneUIOS",
         "License": "CC-BY-SA-4.0",
-        "Name": "OneUI OS"
+        "Name": "One UI"
     }
 }

@@ -1,7 +1,7 @@
 {
     "KPackageStructure": "Plasma/Applet",
     "KPlugin": {
-        "Authors": [{ "Name": "OneUI OS" }],
+        "Authors": [{ "Name": "One UI" }],
         "Category": "Multimedia",
         "Description": "One UI live activities in the taskbar: what's playing, and a red chip with a timer while an app records from the microphone.",
         "Icon": "media-playback-start",

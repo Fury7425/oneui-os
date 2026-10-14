@@ -1,7 +1,7 @@
 {
     "KPackageStructure": "Plasma/Applet",
     "KPlugin": {
-        "Authors": [{ "Name": "OneUI OS" }],
+        "Authors": [{ "Name": "One UI" }],
         "Category": "Date and Time",
         "Description": "One UI desktop clock: date above, hours over minutes.",
         "Icon": "preferences-system-time",

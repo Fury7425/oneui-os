@@ -1,0 +1,224 @@
+#!/usr/bin/python3
+# One UI installer, the app on the live USB. Main.qml draws the first-boot style screens (OneUI OS Motion guide,
+# "Installer"); this file tells it about the laptop and its disks and runs the install through a root helper
+# (install-helper, `bootc install to-disk`). Started by the live session's autostart; see os/installer/live-hook.sh.
+# Test the parts that don't need a live USB:  python3 oneui-installer --selftest
+import json
+import math
+import re
+import subprocess
+import sys
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+MIN_BYTES = 32 * 10**9  # the image unpacks to about 12 GB; leave room for updates and apps
+
+
+def read(path):
+    try:
+        return Path(path).read_text().strip()
+    except OSError:
+        return ""
+
+
+def galaxy_from_code(code):
+    """Samsung model numbers: 940XGQ = 14" Pro, gen G (2024) -> "Galaxy Book4 Pro"; Q instead of X = 360."""
+    m = re.search(r"(\d)\d0([XQ])([E-H])", code.upper())
+    if not m:
+        return ""
+    series, kind, gen = m.groups()
+    name = "Galaxy Book" + {"E": "2", "F": "3", "G": "4", "H": "5"}[gen]
+    if series == "9":
+        name += " Pro"
+    if kind == "Q":
+        name += " 360"
+    return name
+
+
+def model_name():
+    # ponytail: model-number table covers Book2..Book5; Ultra models read as "Pro" unless the firmware's
+    # product_family already names them, which is checked first
+    vendor = read("/sys/class/dmi/id/sys_vendor").lower()
+    family = read("/sys/class/dmi/id/product_family")
+    product = read("/sys/class/dmi/id/product_name")
+    if "samsung" in vendor:
+        if family.lower().startswith("galaxy book"):
+            return family
+        return galaxy_from_code(product) or "Galaxy Book"
+    return family if family and family.lower() not in ("to be filled by o.e.m.", "default string") else "laptop"
+
+
+def specs():
+    cpu = ""
+    for line in read("/proc/cpuinfo").splitlines():
+        if line.startswith("model name"):
+            cpu = line.split(":", 1)[1]
+            break
+    cpu = re.sub(r"\((R|TM|tm|r)\)|\bCPU\b|@.*$|\b\d+(th|st|nd|rd) Gen\b", "", cpu)
+    cpu = re.sub(r"\s+", " ", cpu).strip()
+    kb = re.search(r"MemTotal:\s+(\d+)", read("/proc/meminfo"))
+    mem = f"{math.ceil(int(kb.group(1)) / 1024**2)} GB memory" if kb else ""
+    return " · ".join(p for p in (cpu, mem) if p)
+
+
+def size_text(n):
+    return f"{n / 10**12:.0f} TB" if n >= 10**12 else f"{n / 10**9:.0f} GB"
+
+
+def live_disk():
+    """The USB stick this installer runs from, so it can't be picked."""
+    try:
+        src = subprocess.run(["findmnt", "-no", "SOURCE", "/run/initramfs/live"], capture_output=True, text=True).stdout.strip()
+        return subprocess.run(["lsblk", "-no", "PKNAME", src], capture_output=True, text=True).stdout.strip() if src else ""
+    except OSError:
+        return ""
+
+
+def disks():
+    out = subprocess.run(["lsblk", "-J", "-b", "-o", "NAME,PATH,SIZE,MODEL,TRAN,TYPE,RO,RM,FSTYPE,LABEL"],
+                         capture_output=True, text=True).stdout
+    live = live_disk()
+    rows = []
+    for d in json.loads(out or '{"blockdevices": []}')["blockdevices"]:
+        if d.get("type") != "disk" or d.get("ro") in (True, "1") or d["name"].startswith(("zram", "loop", "sr")):
+            continue
+        kids = d.get("children") or []
+        fs = {k.get("fstype") for k in kids}
+        has = "Windows" if "ntfs" in fs else "Linux" if fs & {"btrfs", "ext4", "xfs"} else "Empty" if not kids else "Has data"
+        usb = d.get("tran") == "usb" or d.get("rm") in (True, "1")
+        size = int(d.get("size") or 0)
+        kind = "USB drive" if usb else "Internal SSD" if d.get("tran") in ("nvme", "sata") or d["name"].startswith("nvme") else "Disk"
+        note = ""
+        if d["name"] == live:
+            note = "This installer"
+        elif size < MIN_BYTES:
+            note = f"Too small, One UI needs {size_text(MIN_BYTES)}"
+        rows.append({
+            "path": d["path"],
+            "title": f"{kind} · {size_text(size)}",
+            "detail": note or " · ".join(p for p in (has, (d.get("model") or "").strip()) if p),
+            "usb": usb,
+            "ok": not note,
+            "windows": has == "Windows",
+        })
+    rows.sort(key=lambda r: (not r["ok"], r["usb"]))
+    return rows
+
+
+# bootc's messages -> ring position. Copying the image is the long part, so the ring creeps inside it.
+STAGES = [
+    ("Wiping", 0.03), ("Initializing ostree", 0.06), ("layers needed", 0.08), ("Fetching", 0.1),
+    ("Deploying", 0.82), ("Installing bootloader", 0.9), ("Trimming", 0.95), ("Installation complete", 1.0),
+]
+CREEP_CAP = {0.08: 0.8, 0.1: 0.8, 0.82: 0.89, 0.9: 0.94}
+
+
+def stage_for(line, current):
+    for key, value in STAGES:
+        if key.lower() in line.lower() and value > current:
+            return value
+    return current
+
+
+def _selftest():
+    assert galaxy_from_code("NT940XGQ") == "Galaxy Book4 Pro"
+    assert galaxy_from_code("960QGK") == "Galaxy Book4 Pro 360"
+    assert galaxy_from_code("NP750XGK") == "Galaxy Book4"
+    assert galaxy_from_code("950XED") == "Galaxy Book2 Pro"
+    assert galaxy_from_code("Virtual Machine") == ""
+    assert stage_for("Installing bootloader via grub2", 0.5) == 0.9
+    assert stage_for("Wiping /dev/nvme0n1", 0.5) == 0.5  # never goes back
+    assert size_text(512110190592) == "512 GB" and size_text(2 * 10**12) == "2 TB"
+    print("ok")
+
+
+def main():
+    from PySide6.QtCore import Property, QObject, QProcess, QTimer, Signal, Slot, QUrl
+    from PySide6.QtGui import QGuiApplication, QIcon
+    from PySide6.QtQml import QQmlApplicationEngine
+
+    class Installer(QObject):
+        changed = Signal()
+
+        def __init__(self):
+            super().__init__()
+            self._disks = disks()
+            self._progress = 0.0
+            self._state = "idle"  # idle, running, done, failed
+            self._log = []
+            self._proc = None
+            self._creep = QTimer(interval=1000, timeout=self._tick)
+
+        model = Property(str, lambda self: model_name(), notify=changed)
+        specs = Property(str, lambda self: specs(), notify=changed)
+        hasTpm = Property(bool, lambda self: Path("/sys/class/tpm/tpm0").exists(), notify=changed)
+        diskList = Property("QVariantList", lambda self: self._disks, notify=changed)
+        progress = Property(float, lambda self: self._progress, notify=changed)
+        state = Property(str, lambda self: self._state, notify=changed)
+        log = Property(str, lambda self: "\n".join(self._log[-12:]), notify=changed)
+
+        @Slot()
+        def refreshDisks(self):
+            self._disks = disks()
+            self.changed.emit()
+
+        @Slot(str, bool)
+        def install(self, path, encrypt):
+            if self._state == "running":
+                return
+            self._progress, self._state, self._log = 0.0, "running", []
+            self._proc = QProcess(self)
+            self._proc.setProcessChannelMode(QProcess.MergedChannels)
+            self._proc.readyReadStandardOutput.connect(self._read)
+            self._proc.finished.connect(self._finished)
+            self._proc.start("pkexec", [str(HERE / "install-helper"), path, "1" if encrypt else "0"])
+            self._creep.start()
+            self.changed.emit()
+
+        def _read(self):
+            text = bytes(self._proc.readAllStandardOutput()).decode(errors="replace")
+            for line in re.split(r"[\r\n]+", text):
+                line = line.strip()
+                if not line:
+                    continue
+                self._log.append(line)
+                self._progress = stage_for(line, self._progress)
+            self.changed.emit()
+
+        def _tick(self):
+            cap = CREEP_CAP.get(next((v for k, v in reversed(STAGES) if v <= self._progress), 0), self._progress)
+            if self._progress < cap:
+                self._progress = min(cap, self._progress + (cap - self._progress) * 0.01)
+                self.changed.emit()
+
+        def _finished(self, code, _status):
+            self._creep.stop()
+            if code == 0:
+                self._progress, self._state = 1.0, "done"
+            else:
+                self._state = "failed"
+            self.changed.emit()
+
+        @Slot()
+        def restart(self):
+            QProcess.startDetached("systemctl", ["reboot"])
+
+        @Slot()
+        def quit(self):
+            QGuiApplication.quit()
+
+    app = QGuiApplication(sys.argv)
+    app.setApplicationName("One UI installer")
+    app.setDesktopFileName("oneui-installer")
+    app.setWindowIcon(QIcon.fromTheme("oneui-os-logo"))
+    engine = QQmlApplicationEngine()
+    installer = Installer()
+    engine.rootContext().setContextProperty("installer", installer)
+    engine.load(QUrl.fromLocalFile(str(HERE / "Main.qml")))
+    if not engine.rootObjects():
+        sys.exit(1)
+    sys.exit(app.exec())
+
+
+if __name__ == "__main__":
+    _selftest() if "--selftest" in sys.argv else main()

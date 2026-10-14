@@ -1,11 +1,11 @@
 {
     "KPackageStructure": "Plasma/LookAndFeel",
     "KPlugin": {
-        "Authors": [{ "Name": "OneUI OS" }],
+        "Authors": [{ "Name": "One UI" }],
         "Description": "One UI-inspired dark theme",
         "Id": "org.oneuios.dark.desktop",
         "License": "GPL-2.0-or-later",
-        "Name": "OneUI OS Dark",
+        "Name": "One UI Dark",
         "Version": "0.1"
     },
     "X-Plasma-APIVersion": "2"

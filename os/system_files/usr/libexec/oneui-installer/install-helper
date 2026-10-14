@@ -1,0 +1,25 @@
+#!/usr/bin/bash
+# Root half of the One UI installer: erases DISK and installs the image the live USB carries.
+#   install-helper DISK ENCRYPT    (ENCRYPT: 1 = LUKS unlocked by the laptop's TPM, 0 = none)
+# The live USB has the image in its container storage (titanoboa pulls it there), so nothing is downloaded.
+# bootc has to run inside the image it installs; --target-imgref makes the installed system update from the registry.
+set -euo pipefail
+
+disk=${1:?disk} encrypt=${2:-0}
+ref=$(cat /usr/share/oneui-os/image-ref)
+
+[ -b "$disk" ] || { echo "Not a disk: $disk"; exit 2; }
+[ "$(lsblk -dno TYPE "$disk")" = disk ] || { echo "Not a whole disk: $disk"; exit 2; }
+if lsblk -no MOUNTPOINTS "$disk" | grep -q .; then
+    echo "$disk is in use; it may be the installer USB."
+    exit 2
+fi
+
+args=(install to-disk --wipe --filesystem btrfs --target-imgref "$ref")
+[ "$encrypt" = 1 ] && args+=(--block-setup tpm2-luks)
+
+echo "Wiping $disk"
+exec podman run --rm --privileged --pid=host --pull=never \
+    --security-opt label=type:unconfined_t \
+    -v /dev:/dev -v /var/lib/containers:/var/lib/containers \
+    "$ref" bootc "${args[@]}" "$disk"

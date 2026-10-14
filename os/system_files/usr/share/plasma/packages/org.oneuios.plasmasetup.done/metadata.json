@@ -1,8 +1,8 @@
 {
     "KPackageStructure": "KDE/PlasmaSetup",
     "KPlugin": {
-        "Authors": [{ "Name": "OneUI OS" }],
-        "Description": "Last page of first boot, and the OneUI OS look for the setup frame.",
+        "Authors": [{ "Name": "One UI" }],
+        "Description": "Last page of first boot, and the One UI look for the setup frame.",
         "Id": "org.oneuios.plasmasetup.done",
         "License": "GPL-2.0-or-later",
         "Name": "You're all set"

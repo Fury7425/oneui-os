@@ -1,5 +1,10 @@
 name: Build ISO
 
+# A live USB built from the published image by titanoboa: it boots into One UI and opens the One UI installer
+# (os/system_files/usr/libexec/oneui-installer), which installs the copy of the image the USB carries.
+# The image package on ghcr.io has to be public: the live build pulls it without credentials, and installed
+# laptops update from it the same way.
+
 on:
   workflow_dispatch:
 
@@ -18,28 +23,31 @@ jobs:
 
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
-      - name: Point the installer at this repo's image
+      - uses: extractions/setup-just@v3
+
+      - name: Build the live USB
         run: |
-          echo "IMAGE=ghcr.io/${GITHUB_REPOSITORY_OWNER,,}/oneui-os:latest" >> "$GITHUB_ENV"
-          sed -i "s|ghcr.io/YOUR_GITHUB_USER|ghcr.io/${GITHUB_REPOSITORY_OWNER,,}|" os/disk_config/iso.toml
+          set -euo pipefail
+          IMAGE_REF="ghcr.io/${GITHUB_REPOSITORY_OWNER,,}/oneui-os:latest"
+          hook="${RUNNER_TEMP}/live-hook.sh"
+          sed "s|@IMAGE_REF@|${IMAGE_REF}|" os/installer/live-hook.sh > "$hook"
 
-      # The builder action pulls with root's podman, so log root in (needed while the package is private).
-      - name: Log in to GitHub Container Registry
-        run: echo "${{ secrets.GITHUB_TOKEN }}" | sudo podman login ghcr.io -u "${{ github.actor }}" --password-stdin
+          # Same titanoboa revision Bluefin builds with.
+          boa="${RUNNER_TEMP}/titanoboa"
+          git clone --quiet https://github.com/ublue-os/titanoboa "$boa"
+          git -C "$boa" checkout --quiet 840217d97bd0bc9a52466508c54d8dda5c5ba2fd
+          sed -i '1a set lists' "$boa/Justfile" # newer just needs this for the Justfile's which()
 
-      - name: Build ISO
-        id: build
-        uses: osbuild/bootc-image-builder-action@8661cd3832544ad68c12dcde8681b13ab0f56a8d
-        with:
-          builder-image: quay.io/centos-bootc/bootc-image-builder:latest
-          config-file: ./os/disk_config/iso.toml
-          image: ${{ env.IMAGE }}
-          types: anaconda-iso
-          additional-args: --use-librepo=True --rootfs btrfs # Fedora's default; the ublue base image names none
+          # build <image> <livesys> <flatpaks> <compression> <kargs> <image to carry> <polkit>
+          # No flatpaks on the USB: installs fetch theirs on first boot (oneui-os-flatpaks.service).
+          sudo env PATH="$PATH" CI="$CI" HOOK_post_rootfs="$hook" \
+              "$(command -v just)" -f "$boa/Justfile" build "$IMAGE_REF" 1 none squashfs NONE "$IMAGE_REF" 1
+          sudo chown "$(id -u):$(id -g)" "$boa/output.iso"
+          mkdir -p out && mv "$boa/output.iso" out/oneui-1.0-x86_64.iso
 
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
-          name: oneui-os-iso
-          path: ${{ steps.build.outputs.output-directory }}
+          name: oneui-iso
+          path: out
           if-no-files-found: error
           compression-level: 0

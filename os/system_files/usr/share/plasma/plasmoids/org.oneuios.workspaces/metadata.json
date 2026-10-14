@@ -1,7 +1,7 @@
 {
     "KPackageStructure": "Plasma/Applet",
     "KPlugin": {
-        "Authors": [{ "Name": "OneUI OS" }],
+        "Authors": [{ "Name": "One UI" }],
         "Category": "Windows and Tasks",
         "Description": "One UI workspace dots: the current desktop is a wide pill, desktops with windows are darker.",
         "Icon": "user-desktop",

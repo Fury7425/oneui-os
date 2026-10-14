@@ -1,6 +1,6 @@
 [Icon Theme]
-Name=OneUI OS Dark
-Comment=OneUI OS line icons where the mockup has its own; everything else from Papirus-Dark
+Name=One UI Dark
+Comment=One UI line icons where the mockup has its own; everything else from Papirus-Dark
 Inherits=Papirus-Dark,breeze-dark,hicolor
 Example=notification-inactive-symbolic
 Directories=scalable/status,scalable/actions

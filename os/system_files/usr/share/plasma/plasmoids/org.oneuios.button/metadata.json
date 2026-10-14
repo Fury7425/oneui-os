@@ -1,9 +1,9 @@
 {
     "KPackageStructure": "Plasma/Applet",
     "KPlugin": {
-        "Authors": [{ "Name": "OneUI OS" }],
+        "Authors": [{ "Name": "One UI" }],
         "Category": "Utilities",
-        "Description": "Round taskbar button that runs a command: the logo (overview) button and the search button of the OneUI OS taskbar.",
+        "Description": "Round taskbar button that runs a command: the logo (overview) button and the search button of the One UI taskbar.",
         "Icon": "oneui-os-logo",
         "Id": "org.oneuios.button",
         "License": "GPL-2.0-or-later",

@@ -3,7 +3,8 @@
 set -ouex pipefail
 
 cp -avf /ctx/system_files/. /
-chmod 755 /usr/libexec/galaxybook-setup /usr/libexec/oneui-os-firstlogin
+chmod 755 /usr/libexec/galaxybook-setup /usr/libexec/oneui-os-firstlogin \
+    /usr/libexec/oneui-installer/oneui-installer /usr/libexec/oneui-installer/install-helper
 # Same three-pill layout for a first login in dark mode (one source file, copied at build time).
 cp -r /usr/share/plasma/look-and-feel/org.oneuios.light.desktop/contents/layouts \
     /usr/share/plasma/look-and-feel/org.oneuios.dark.desktop/contents/
@@ -51,9 +52,11 @@ for d in images images_dark; do
     done
 done
 
-### Branding. ID stays "fedora": bootc-image-builder and dnf resolve repos from it.
-sed -i -e 's/^NAME=.*/NAME="OneUI OS"/' \
-    -e 's/^PRETTY_NAME=.*/PRETTY_NAME="OneUI OS 0.1 (Galaxy Book Edition)"/' \
+### Branding. ID and VERSION_ID stay Fedora's: bootc-image-builder and dnf resolve repos from them (the
+### installer shows "1.0" from os/installer/product/.buildstamp instead).
+sed -i -e 's/^NAME=.*/NAME="One UI"/' \
+    -e 's/^VERSION=.*/VERSION="1.0 (Galaxy Book Edition)"/' \
+    -e 's/^PRETTY_NAME=.*/PRETTY_NAME="One UI 1.0 (Galaxy Book Edition)"/' \
     -e 's/^LOGO=.*/LOGO=oneui-os-logo/' /usr/lib/os-release
 grep -q '^LOGO=' /usr/lib/os-release || echo 'LOGO=oneui-os-logo' >>/usr/lib/os-release
 

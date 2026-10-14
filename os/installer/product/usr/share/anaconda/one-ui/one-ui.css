@@ -1,0 +1,425 @@
+/* One UI skin for the installer (Anaconda, GTK 3), from the OneUI OS Motion guide (mockup/motion.html):
+ * the sidebar sits on the pre-blurred wallpaper with the mark, the rest uses the light OS tokens
+ * (OneUIOSLight.colors), pills for controls, flat tints instead of gradients, the ink "On" colour for the
+ * main action, and the guide's hover timing. Replaces Fedora's fedora.css (see etc/anaconda/conf.d).
+ * GTK 3 CSS has no transform, blur or oklch, so springs, scale and glass are left out. */
+
+@define-color oneui_window #f0f0f3;
+@define-color oneui_view #ffffff;
+@define-color oneui_ink #18181e;
+@define-color oneui_ink2 #5f5f69;
+@define-color oneui_ink3 #8e8e96;
+@define-color oneui_line rgba(24, 24, 30, 0.12);
+@define-color oneui_tint rgba(24, 24, 30, 0.06);
+@define-color oneui_tint_hi rgba(24, 24, 30, 0.10);
+@define-color oneui_tint_down rgba(24, 24, 30, 0.16);
+@define-color oneui_track rgba(24, 24, 30, 0.16);
+@define-color oneui_on #18181e;
+@define-color oneui_on_hi #2e2e36;
+@define-color oneui_on_fg #fcfcfc;
+@define-color oneui_focus #3783f0;
+@define-color oneui_warn #db4241;
+
+/* Anaconda's own names for these, so its base stylesheet follows */
+@define-color anaconda_bg_color @oneui_window;
+@define-color theme_selected_bg_color @oneui_on;
+@define-color theme_selected_fg_color @oneui_on_fg;
+
+window {
+    font-family: "Pretendard Variable", "Pretendard", "Noto Sans", sans-serif;
+}
+
+window.background,
+.background {
+    background-color: @oneui_window;
+    color: @oneui_ink;
+}
+
+/* ---- sidebar: blurred wallpaper (the guide: "setup sits on its blurred copy"), mark and wordmark on top ---- */
+
+.logo-sidebar {
+    background-color: #e4e1e8;
+    background-image: url("/usr/share/anaconda/one-ui/wall.png");
+    background-size: cover;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+}
+
+.logo {
+    background-color: transparent;
+    background-image: url("/usr/share/anaconda/one-ui/mark.svg"), url("/usr/share/anaconda/one-ui/wordmark.svg");
+    background-size: 64px 64px, 112px 34px;
+    background-position: 50% 40px, 50% 116px;
+    background-repeat: no-repeat;
+}
+
+.product-logo {
+    background-image: none;
+    background-color: transparent;
+}
+
+/* ---- first-boot layout, switched on by the skin addon (addons/org_oneui_skin): the whole installer on the
+ * blurred wallpaper, each screen's content on one glass card with 34 px corners (the guide's .su-card).
+ * Without the addon the plain layout above stays. ---- */
+
+window.oneui-main {
+    background-color: #e4e1e8;
+    background-image: url("/usr/share/anaconda/one-ui/wall.png");
+    background-size: cover;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+}
+
+window.oneui-main .background,
+window.oneui-main .logo-sidebar {
+    background-color: transparent;
+    background-image: none;
+}
+
+.oneui-card {
+    padding: 28px 32px;
+    border: 1px solid @oneui_line;
+    border-radius: 34px;
+    background-color: rgba(247, 247, 250, 0.84);
+    box-shadow: inset 0 1px rgba(255, 255, 255, 0.75), 0 14px 36px -14px rgba(60, 50, 80, 0.3);
+}
+
+/* "Hello" in ten languages on the welcome card (.su-word), the question under it (.su-sub) */
+.oneui-hello {
+    font-size: 56px;
+    font-weight: 700;
+    letter-spacing: -1px;
+    color: @oneui_ink;
+}
+
+.oneui-sub {
+    font-size: 15px;
+    color: @oneui_ink2;
+}
+
+/* ---- top bar: no coloured band; title in ink, product line under it ---- */
+
+#nav-box,
+AnacondaSpokeWindow #nav-box {
+    background-color: transparent;
+    background-image: none;
+    color: @oneui_ink;
+}
+
+#anaconda-name-label {
+    font-size: 17px;
+    font-weight: 700;
+    color: @oneui_ink;
+}
+
+#anaconda-distro-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: @oneui_ink2;
+}
+
+#anaconda-beta-label {
+    color: @oneui_warn;
+    font-weight: 700;
+}
+
+AnacondaLayoutIndicator {
+    background-color: @oneui_tint;
+    color: @oneui_ink;
+    border-radius: 12px;
+}
+
+/* ---- buttons: pills, flat tint; the main action is the ink "On" pill ---- */
+
+button {
+    min-height: 36px;
+    padding: 0 18px;
+    border: none;
+    border-radius: 18px;
+    background-color: @oneui_tint;
+    background-image: none;
+    color: @oneui_ink;
+    box-shadow: none;
+    text-shadow: none;
+    -gtk-icon-shadow: none;
+    outline-color: @oneui_focus;
+    outline-width: 2px;
+    outline-offset: 2px;
+    -gtk-outline-radius: 20px;
+    transition: all 160ms linear;
+}
+
+button:hover {
+    background-color: @oneui_tint_hi;
+}
+
+button:active,
+button:checked {
+    background-color: @oneui_tint_down;
+}
+
+button:disabled {
+    background-color: rgba(24, 24, 30, 0.04);
+    color: @oneui_ink3;
+}
+
+button.suggested-action,
+#nav-box button {
+    background-color: @oneui_on;
+    color: @oneui_on_fg;
+}
+
+button.suggested-action:hover,
+#nav-box button:hover {
+    background-color: @oneui_on_hi;
+}
+
+button.suggested-action:active,
+#nav-box button:active {
+    background-color: #000000;
+}
+
+button.suggested-action:disabled {
+    background-color: @oneui_track;
+    color: @oneui_on_fg;
+}
+
+button.destructive-action {
+    background-color: @oneui_warn;
+    color: #ffffff;
+}
+
+button.destructive-action:hover {
+    background-color: #c83736;
+}
+
+button.flat,
+button.link,
+button.image-button.flat {
+    background-color: transparent;
+}
+
+button.flat:hover {
+    background-color: @oneui_tint;
+}
+
+button.link {
+    min-height: 0;
+    padding: 0;
+    color: @oneui_focus;
+}
+
+/* buttons that are parts of other widgets stay square and quiet */
+treeview.view header button,
+spinbutton button,
+notebook tab button,
+calendar button,
+scrollbar button {
+    min-height: 0;
+    border-radius: 0;
+    background-color: transparent;
+    padding: 4px 8px;
+}
+
+treeview.view header button {
+    border-bottom: 1px solid @oneui_line;
+    font-weight: 600;
+    color: @oneui_ink2;
+}
+
+/* ---- text fields: white pills with a hairline, ink ring on focus ---- */
+
+entry,
+spinbutton {
+    min-height: 36px;
+    padding: 0 14px;
+    border: 1px solid @oneui_line;
+    border-radius: 18px;
+    background-color: @oneui_view;
+    background-image: none;
+    color: @oneui_ink;
+    box-shadow: none;
+    transition: all 160ms linear;
+}
+
+entry:focus,
+spinbutton:focus {
+    border-color: @oneui_on;
+    box-shadow: inset 0 0 0 1px @oneui_on;
+}
+
+entry:disabled {
+    background-color: @oneui_tint;
+    color: @oneui_ink3;
+}
+
+spinbutton entry {
+    min-height: 0;
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    background-color: transparent;
+    box-shadow: none;
+}
+
+entry selection,
+label selection {
+    background-color: @oneui_on;
+    color: @oneui_on_fg;
+}
+
+/* ---- lists: one white group with 16 px corners, ink selection ---- */
+
+scrolledwindow.frame,
+frame > border {
+    border: 1px solid @oneui_line;
+    border-radius: 16px;
+    background-color: @oneui_view;
+}
+
+scrolledwindow.frame .view:not(:selected),
+scrolledwindow.frame viewport,
+scrolledwindow.frame list {
+    background-color: transparent;
+}
+
+treeview.view,
+.view {
+    color: @oneui_ink;
+}
+
+treeview.view:selected,
+treeview.view:selected:focus,
+.view:selected,
+.view:selected:focus {
+    background-color: @oneui_on;
+    color: @oneui_on_fg;
+}
+
+treeview.view:hover:not(:selected) {
+    background-color: @oneui_tint;
+}
+
+list row:selected {
+    background-color: @oneui_tint_hi;
+    color: @oneui_ink;
+}
+
+/* ---- progress: 6 px track, ink fill (the guide's slider track) ---- */
+
+progressbar trough {
+    min-height: 6px;
+    border: none;
+    border-radius: 3px;
+    background-color: @oneui_track;
+    background-image: none;
+    box-shadow: none;
+}
+
+progressbar progress {
+    min-height: 6px;
+    border: none;
+    border-radius: 3px;
+    background-color: @oneui_on;
+    background-image: none;
+    box-shadow: none;
+}
+
+levelbar trough {
+    border-radius: 3px;
+    background-color: @oneui_track;
+    background-image: none;
+    box-shadow: none;
+}
+
+/* ---- check, radio, switch: ink when on, as in quick settings ---- */
+
+check,
+radio {
+    min-width: 18px;
+    min-height: 18px;
+    border: 2px solid rgba(24, 24, 30, 0.45);
+    background-color: @oneui_view;
+    background-image: none;
+    box-shadow: none;
+    color: @oneui_on_fg;
+    transition: all 160ms linear;
+}
+
+check {
+    border-radius: 6px;
+}
+
+radio {
+    border-radius: 100%;
+}
+
+check:checked,
+check:indeterminate,
+radio:checked {
+    border-color: @oneui_on;
+    background-color: @oneui_on;
+}
+
+switch {
+    border: none;
+    border-radius: 14px;
+    background-color: rgba(24, 24, 30, 0.2);
+    background-image: none;
+    box-shadow: none;
+    color: transparent;
+    transition: all 200ms cubic-bezier(.33, 0, .1, 1);
+}
+
+switch:checked {
+    background-color: @oneui_on;
+}
+
+switch slider {
+    min-width: 22px;
+    min-height: 22px;
+    margin: 3px;
+    border: none;
+    border-radius: 11px;
+    background-color: #ffffff;
+    background-image: none;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+}
+
+/* ---- messages: warnings are the only other colour ---- */
+
+infobar.info box,
+infobar.question box {
+    background-color: #e6e6ec;
+}
+
+infobar.info label,
+infobar.question label {
+    color: @oneui_ink;
+}
+
+infobar.warning box,
+infobar.error box {
+    background-color: #fbe3e2;
+}
+
+infobar.warning label,
+infobar.error label {
+    color: #8f2422;
+}
+
+tooltip,
+tooltip.background {
+    border-radius: 12px;
+    background-color: rgba(24, 24, 30, 0.92);
+    color: @oneui_on_fg;
+}
+
+popover,
+menu,
+.menu {
+    border-radius: 16px;
+    border: 1px solid @oneui_line;
+    background-color: @oneui_view;
+    box-shadow: 0 14px 36px -14px rgba(60, 50, 80, 0.3);
+}

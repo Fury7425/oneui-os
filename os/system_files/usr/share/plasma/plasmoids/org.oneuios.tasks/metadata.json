@@ -1,13 +1,13 @@
 {
     "KPackageStructure": "Plasma/Applet",
     "KPlugin": {
-        "Authors": [{ "Name": "OneUI OS" }],
+        "Authors": [{ "Name": "One UI" }],
         "Category": "Windows and Tasks",
         "Description": "Pinned and running apps for the taskbar's centre pill, with One UI running dots",
         "Icon": "preferences-system-windows",
         "Id": "org.oneuios.tasks",
         "License": "GPL-2.0-or-later",
-        "Name": "OneUI OS Apps"
+        "Name": "One UI Apps"
     },
     "X-Plasma-API-Minimum-Version": "6.0"
 }

@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Install One UI
+Comment=Install One UI on this laptop
+Exec=/usr/libexec/oneui-installer/oneui-installer
+Icon=oneui-os-logo
+Categories=System;
+# Shown only on the live USB (os/installer/live-hook.sh turns this off there).
+NoDisplay=true

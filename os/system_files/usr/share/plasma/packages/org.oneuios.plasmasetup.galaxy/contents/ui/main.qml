@@ -34,7 +34,7 @@ PlasmaSetupComponents.SetupModule {
                 wrapMode: Text.Wrap
                 opacity: 0.72
                 font.pixelSize: 14
-                text: i18n("Where Samsung's continuity features live on OneUI OS.")
+                text: i18n("Where Samsung's continuity features live on One UI.")
             }
 
             // galaxybook-setup.service drops this flag when the speaker driver's key still has to be enrolled
