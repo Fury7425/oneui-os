@@ -10,7 +10,7 @@ COPY system_files /system_files
 FROM ${BASE} AS kmod
 RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=secret,id=mok_key \
-    /ctx/kmod.sh
+    bash /ctx/kmod.sh
 
 FROM ${BASE}
 RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
@@ -18,6 +18,6 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/cache \
     --mount=type=cache,dst=/var/log \
     --mount=type=tmpfs,dst=/tmp \
-    /ctx/build.sh
+    bash /ctx/build.sh
 
 RUN bootc container lint
