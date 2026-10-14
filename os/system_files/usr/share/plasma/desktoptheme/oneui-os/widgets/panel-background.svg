@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Taskbar pill: 28 px corners, half the 56 px panel, so each panel is a full pill. 72 % glass, 12/9 px padding. -->
+<!-- Taskbar pill, the guide's floating glass: 28 px corners (half the 56 px panel), view colour at 62 % (white in light), a 1 px
+     light edge inside the top (box-shadow 0 1px 0 inset), 12/9 px padding, 12 px from the screen edges. -->
 <!-- Each segment: glass fill (Window colour) plus a 1 px edge (text colour at 12 %, the mockup line token).
      Class and fill sit on every shape: QtSvg does not pass the colour class from a group down to its children.
      mask-* give Plasma the exact shape for blur and the visible region; without them floating panels stay
      hidden at login (Plasma 6.6, seen in a F44 VM). No double hyphen in comments: it breaks the XML. -->
-<svg xmlns="http://www.w3.org/2000/svg" width="200" height="60" viewBox="0 0 200 60">
-  <style id="current-color-scheme">.ColorScheme-Background { color:#f0f0f3; } .ColorScheme-Text { color:#18181e; }</style>
-  <g id="topleft"><path class="ColorScheme-Background" style="fill:currentColor;fill-opacity:0.72" d="M0,28 A28,28 0 0 1 28,0 L28,28 Z"/><path class="ColorScheme-Text" style="fill:currentColor;fill-opacity:0.12" d="M0,28 A28,28 0 0 1 28,0 L28,1 A27,27 0 0 0 1,28 Z"/></g>
-  <g id="top"><rect class="ColorScheme-Background" style="fill:currentColor;fill-opacity:0.72" x="28" y="0" width="4" height="28"/><rect class="ColorScheme-Text" style="fill:currentColor;fill-opacity:0.12" x="28" y="0" width="4" height="1"/></g>
-  <g id="topright"><path class="ColorScheme-Background" style="fill:currentColor;fill-opacity:0.72" d="M32,0 A28,28 0 0 1 60,28 L32,28 Z"/><path class="ColorScheme-Text" style="fill:currentColor;fill-opacity:0.12" d="M32,0 A28,28 0 0 1 60,28 L59,28 A27,27 0 0 0 32,1 Z"/></g>
-  <g id="left"><rect class="ColorScheme-Background" style="fill:currentColor;fill-opacity:0.72" x="0" y="28" width="28" height="4"/><rect class="ColorScheme-Text" style="fill:currentColor;fill-opacity:0.12" x="0" y="28" width="1" height="4"/></g>
-  <rect id="center" class="ColorScheme-Background" style="fill:currentColor;fill-opacity:0.72" x="28" y="28" width="4" height="4"/>
-  <g id="right"><rect class="ColorScheme-Background" style="fill:currentColor;fill-opacity:0.72" x="32" y="28" width="28" height="4"/><rect class="ColorScheme-Text" style="fill:currentColor;fill-opacity:0.12" x="59" y="28" width="1" height="4"/></g>
-  <g id="bottomleft"><path class="ColorScheme-Background" style="fill:currentColor;fill-opacity:0.72" d="M0,32 L28,32 L28,60 A28,28 0 0 1 0,32 Z"/><path class="ColorScheme-Text" style="fill:currentColor;fill-opacity:0.12" d="M0,32 L1,32 A27,27 0 0 0 28,59 L28,60 A28,28 0 0 1 0,32 Z"/></g>
-  <g id="bottom"><rect class="ColorScheme-Background" style="fill:currentColor;fill-opacity:0.72" x="28" y="32" width="4" height="28"/><rect class="ColorScheme-Text" style="fill:currentColor;fill-opacity:0.12" x="28" y="59" width="4" height="1"/></g>
-  <g id="bottomright"><path class="ColorScheme-Background" style="fill:currentColor;fill-opacity:0.72" d="M32,32 L60,32 A28,28 0 0 1 32,60 Z"/><path class="ColorScheme-Text" style="fill:currentColor;fill-opacity:0.12" d="M60,32 A28,28 0 0 1 32,60 L32,59 A27,27 0 0 0 59,32 Z"/></g>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="210" viewBox="0 0 200 210">
+  <style id="current-color-scheme">.ColorScheme-ViewBackground { color:#ffffff; } .ColorScheme-Text { color:#18181e; }</style>
+  <g id="topleft"><path class="ColorScheme-ViewBackground" style="fill:currentColor;fill-opacity:0.62" d="M0,28 A28,28 0 0 1 28,0 L28,28 Z"/><path class="ColorScheme-Text" style="fill:currentColor;fill-opacity:0.12" d="M0,28 A28,28 0 0 1 28,0 L28,1 A27,27 0 0 0 1,28 Z"/><path class="ColorScheme-ViewBackground" style="fill:currentColor;fill-opacity:0.75" d="M1,28 A27,27 0 0 1 28,1 L28,2 A27,26 0 0 0 1,28 Z"/></g>
+  <g id="top"><rect class="ColorScheme-ViewBackground" style="fill:currentColor;fill-opacity:0.62" x="28" y="0" width="4" height="28"/><rect class="ColorScheme-Text" style="fill:currentColor;fill-opacity:0.12" x="28" y="0" width="4" height="1"/><rect class="ColorScheme-ViewBackground" style="fill:currentColor;fill-opacity:0.75" x="28" y="1" width="4" height="1"/></g>
+  <g id="topright"><path class="ColorScheme-ViewBackground" style="fill:currentColor;fill-opacity:0.62" d="M32,0 A28,28 0 0 1 60,28 L32,28 Z"/><path class="ColorScheme-Text" style="fill:currentColor;fill-opacity:0.12" d="M32,0 A28,28 0 0 1 60,28 L59,28 A27,27 0 0 0 32,1 Z"/><path class="ColorScheme-ViewBackground" style="fill:currentColor;fill-opacity:0.75" d="M32,1 A27,27 0 0 1 59,28 A27,26 0 0 0 32,2 Z"/></g>
+  <g id="left"><rect class="ColorScheme-ViewBackground" style="fill:currentColor;fill-opacity:0.62" x="0" y="28" width="28" height="4"/><rect class="ColorScheme-Text" style="fill:currentColor;fill-opacity:0.12" x="0" y="28" width="1" height="4"/></g>
+  <rect id="center" class="ColorScheme-ViewBackground" style="fill:currentColor;fill-opacity:0.62" x="28" y="28" width="4" height="4"/>
+  <g id="right"><rect class="ColorScheme-ViewBackground" style="fill:currentColor;fill-opacity:0.62" x="32" y="28" width="28" height="4"/><rect class="ColorScheme-Text" style="fill:currentColor;fill-opacity:0.12" x="59" y="28" width="1" height="4"/></g>
+  <g id="bottomleft"><path class="ColorScheme-ViewBackground" style="fill:currentColor;fill-opacity:0.62" d="M0,32 L28,32 L28,60 A28,28 0 0 1 0,32 Z"/><path class="ColorScheme-Text" style="fill:currentColor;fill-opacity:0.12" d="M0,32 L1,32 A27,27 0 0 0 28,59 L28,60 A28,28 0 0 1 0,32 Z"/></g>
+  <g id="bottom"><rect class="ColorScheme-ViewBackground" style="fill:currentColor;fill-opacity:0.62" x="28" y="32" width="4" height="28"/><rect class="ColorScheme-Text" style="fill:currentColor;fill-opacity:0.12" x="28" y="59" width="4" height="1"/></g>
+  <g id="bottomright"><path class="ColorScheme-ViewBackground" style="fill:currentColor;fill-opacity:0.62" d="M32,32 L60,32 A28,28 0 0 1 32,60 Z"/><path class="ColorScheme-Text" style="fill:currentColor;fill-opacity:0.12" d="M60,32 A28,28 0 0 1 32,60 L32,59 A27,27 0 0 0 59,32 Z"/></g>
   <g fill="#000000">
     <path id="mask-topleft" d="M70,28 A28,28 0 0 1 98,0 L98,28 Z"/>
     <rect id="mask-top" x="98" y="0" width="4" height="28"/>
@@ -26,10 +27,38 @@
     <rect id="mask-bottom" x="98" y="32" width="4" height="28"/>
     <path id="mask-bottomright" d="M102,32 L130,32 A28,28 0 0 1 102,60 Z"/>
   </g>
+  <!-- floating-*: only the hint margins matter; Plasma uses them as the gap between a floating pill and the screen edge (12 px, the guide's gap) -->
+  <g fill="none">
+    <rect id="floating-topleft" x="140" y="20" width="2" height="2"/><rect id="floating-top" x="142" y="20" width="2" height="2"/><rect id="floating-topright" x="144" y="20" width="2" height="2"/>
+    <rect id="floating-left" x="140" y="22" width="2" height="2"/><rect id="floating-center" x="142" y="22" width="2" height="2"/><rect id="floating-right" x="144" y="22" width="2" height="2"/>
+    <rect id="floating-bottomleft" x="140" y="24" width="2" height="2"/><rect id="floating-bottom" x="142" y="24" width="2" height="2"/><rect id="floating-bottomright" x="144" y="24" width="2" height="2"/>
+  </g>
+  <g fill="#ff00ff">
+    <rect id="floating-hint-left-margin" x="150" y="20" width="12" height="2"/>
+    <rect id="floating-hint-right-margin" x="150" y="24" width="12" height="2"/>
+    <rect id="floating-hint-top-margin" x="166" y="20" width="2" height="12"/>
+    <rect id="floating-hint-bottom-margin" x="170" y="20" width="2" height="12"/>
+  </g>
   <g fill="#ff00ff">
     <rect id="hint-left-margin" x="140" y="0" width="12" height="2"/>
     <rect id="hint-right-margin" x="140" y="4" width="12" height="2"/>
     <rect id="hint-top-margin" x="170" y="0" width="2" height="9"/>
     <rect id="hint-bottom-margin" x="174" y="0" width="2" height="9"/>
+  </g>
+  <!-- shadow-*: the guide's pill shadow (0 14px 36px, spread -14px, 30 %) as PNG tiles, with the pill itself cut away
+       as CSS does. Made by os/test/panel-shadow.py (run it where Pillow is installed, paste its output here). -->
+  <image id="shadow-topleft" x="0" y="100" width="54" height="36" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADYAAAAkCAYAAADCW8lNAAAA/0lEQVR42t3YXQrDIBAEYEc8VJ97hN7/KtG+tEUkUH9mN2P2paGJwsesYoLn4xVECszJ0t1ACjBYzps2B0EhMXjOkzYAQXGNwXksPGAwHgPvxGA8rn6uNL+/67RJSi2mNBjTxKAAYsPYqPp+7sWwYTACDSXEhrFQ7b08C/pWvCPq6pPH2f8U1EpiUEbNwuRRq2tMFjUDAxGFle3cO7GRpMonraAOG0EhhHBYbsXJ+YCLal2ZVjQ4CvWMkYExt39zVC+M2YJSsNUWPHvjDTu0Yi8cu8Aw0bZZBQbSunJN6x+M/U1QBsZOMivAsLhJXF6RcMroee2HAsyiyi5rTL4939uLLFOh7q4cAAAAAElFTkSuQmCC"/>
+  <image id="shadow-top" x="60" y="100" width="1" height="8" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAICAYAAAA4GpVBAAAAFklEQVR42mNwsghiYmJgYGCAE4zYuAAf2wDfK39R2wAAAABJRU5ErkJggg=="/>
+  <image id="shadow-topright" x="70" y="100" width="54" height="36" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADYAAAAkCAYAAADCW8lNAAABQUlEQVR42tWYUQ7DIAxDY8Sh9r0j7P5XKdnPKnUoqEATEpD62/rV4DrF+/UB6S6mACsZ3BO/y3XlSgQrA7o5mBtiNEHhsU3zgCgNYVgFlx3e/pIt+uSMPYU0de/ujPWKnnXBzL1MRIfwIDSimw0B2dIxFoShuqwAVeFyZ5Pgy8PTIKALXJqoSwcRlYGWMdpE4FmpTkAWtquGYHh3xXJxr0fUMrik1OaPRuC4wWm2+yIcfHhNANpjywicqWsW85iFc4gARkKgLHcuGW7zIohpOYQdfg1c07IMiMYuYFQ1lN4ztwUYXaYHKEAgElhdou+EQgNuBVidkhpwYcBYqFym0b8K7G52Q8QSPPtde9o4EAXsdM086r3AaDBItgCTPtiwCBFvxzQSEBHAesSpNBIPMJ5IPEQ/Y+bjiieY1f+Ov3t+Ab0TQTzcPqZpAAAAAElFTkSuQmCC"/>
+  <image id="shadow-left" x="130" y="100" width="26" height="1" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAABCAYAAADAW76WAAAAHElEQVR42mN0sghiQAOMDLgBIwExbGxGBgYGBgBTtADUx4V2OQAAAABJRU5ErkJggg=="/>
+  <image id="shadow-right" x="160" y="100" width="26" height="1" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAABCAYAAADAW76WAAAAH0lEQVR42mN0sghiYWBgYGJgYPjPAAEwGh8bnxhWeQC90QbOZWD/ewAAAABJRU5ErkJggg=="/>
+  <image id="shadow-bottomleft" x="0" y="140" width="54" height="68" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADYAAABECAYAAADKr8YXAAACzElEQVR42t1aW67cIAy13YzajqZdT7+7hO5/Jbe9Of0oqbiZADYxMCESCgGicDj4Gfjnj1+0u5jSFxfajurb/Y06XkKTXp7A2MBsd2DeH4+34zBgbGCkZiH46jLGVwdmZZhn04ocfYtnVPd8RWCsHPNpRsYQgPFMwLg3ayNcqmUmYNh9c5mRMRDRrbWs9Zax+Lu3GcOWjbVlFmDYPX9uNYeRgSbCFv3SQt6kERPa/s1of/UG9wqpgQ3c3ROcDJKvfd0dnHTYflCagg3cw0NbSgfNV2IOBwrlEZSKCzA0AGF5N35eA7DvtYZcDBOF8+RL7QjzexDRNyvApYFd0vRhJ1u8A8g7sLdQ3ulfRvkt1LuHEEcgS225+hrFcvdQ3onoDxH9DvdtXBUwFNQxFOoaESNsBBi3LYHFe6SE/oNbOrhMlsUo1eO29SDTvEXnPMoJRsZoI1PPKaWNrZWIVnHw++BgpEuTR6KsqUWQxu6Shi0te6VF+FDE2VtvtV1R6HtaFOngVaCCtRyAo0K7rbmKIzMwbk843p9Y9fbuUcnmGeYOx8nAGMzCIArK5UlTSoMQBZXyptGUUMidmjF0YBGVWjE5XhoFliC7Udd4IZSRMZUd87BrllgMhegahjZYnWBUJFpKcRglHN1SO3rmPLTRMU5qUZU/uVD7AFMTqpAxoqZMO7cAlouUKbMtNWCPnpNApWNWSqstS+k51fvSKOUGo8xZzENO1dNZlwrOCsXCHjRjZMA/sRI4GNqSrLXM3VuNcw3AJEhpnKc/m2XWsEWttqInuFpm0SoTbHG3UDh/letH5iTChz7p+PuoxrGuZniUS6Vlr8QSJVwq6uVSeQDUgKSasKXFRM+8lwW5dDrLcUZeuUJeeaTnYXkfVrPS5ezgia1ZzWQvYN4Ak9pwFLBaGTIDfZUjR7jk+dwRLL4SMFeQrwpMYy746sCqWP0LnZbBD3RWsBIAAAAASUVORK5CYII="/>
+  <image id="shadow-bottom" x="60" y="140" width="1" height="40" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAoCAYAAAA/tpB3AAAALklEQVR42mNwsgiSYGJgYOBkYmBg+MvEwMDwHxfxj2QJbAQDYTEGVDEGvBIQAgBKvB0cxfoahQAAAABJRU5ErkJggg=="/>
+  <image id="shadow-bottomright" x="70" y="140" width="54" height="68" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADYAAABECAYAAADKr8YXAAACYklEQVR42t2aTXLDIAyFBSZJu+1puu4Rev+z+GVDZhhPIEKWBDibtnbH1uf39ANO+Pv9J+dPIqJIRMh/ozhX+7117O35SOM/weKicTKQsCpYKIIPljeawYo1yCBQNMygmCbwNFY0t6M32OZ1o+isVmT0orAaWLSuhKPAtqxWuBJYbOTX0pNH8m6M0ekelwS7jxhlooMFN0aJXwosZrVwNcUezNEJK4E9DuX9Elb8KiyIUXDREKrWiNn7FrOAfWeo/QBTbtqAFpoIYoZKBygaVRE1wG4ZKhyg0LAjKltvqrZMJyb1l0o9FusJFIJrQAq2FQWCsko4GQxZPJjEzKFb7k3pAPSuMHB3duGZY7E4njLQVizpd6YVWnkEjykkEdFPsbJ9DayxCA4Vy9XKOKR5oa3YvbjBXlS4d08dJ18iQOOFA+d8OqjRypOWYvThAbiqdZw8wMgTMKHpw3V7gSGx4s4A46pEwj51VjnUqmKPFT8pyvmpaU/UFINQrTMwUCoaaFkRDMW0YVz6GDpyTAoDo9wirmKSPOspJr0jlrixJyGI5FivBaFlRS6I5P/MyzsXzBIE1mq1+hh3zrOAMq+KpAzChVJZlCYGkARUmlPQXEFLguuB4OYQLFbQWkFPAcXpY5JFpBUANMA8VTGZIdOJaqVhM1jvUvU8TS01LDZZm4ppBT8MqgU2GkhlCPYK2g2Kk2NaKmDEayTLmU1lY+asFTUTWhIgvBTzrGLweqPpaSGMaNDLAfVaUTsgzPByXTOIoV+HsLj5VH1sSSDLr7QOg7EAmwJGC2w6GAnY1BCWk8d0nyfn04c8/C87ywAAAABJRU5ErkJggg=="/>
+  <g fill="#ff00ff">
+    <rect id="shadow-hint-top-margin" x="140" y="120" width="2" height="8"/>
+    <rect id="shadow-hint-bottom-margin" x="144" y="120" width="2" height="40"/>
+    <rect id="shadow-hint-left-margin" x="150" y="120" width="26" height="2"/>
+    <rect id="shadow-hint-right-margin" x="150" y="124" width="26" height="2"/>
   </g>
 </svg>

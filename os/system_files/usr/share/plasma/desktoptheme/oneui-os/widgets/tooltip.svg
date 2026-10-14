@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Tooltips, as the guide's taskbar tooltips: a 28 px pill (14 px corners) of window glass (view colour at 84 %), a 1 px
+     edge in the text colour at 12 %, a light edge inside the top, 12 px side padding. mask-* give the blur region.
+     No double hyphen in comments: it breaks the XML. -->
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="40" viewBox="0 0 120 40">
+  <style id="current-color-scheme">.ColorScheme-ViewBackground { color:#ffffff; } .ColorScheme-Text { color:#18181e; }</style>
+  <g id="topleft"><path class="ColorScheme-ViewBackground" style="fill:currentColor;fill-opacity:0.84" d="M0,14 A14,14 0 0 1 14,0 L14,14 Z"/><path class="ColorScheme-Text" style="fill:currentColor;fill-opacity:0.12" d="M0,14 A14,14 0 0 1 14,0 L14,1 A13,13 0 0 0 1,14 Z"/><path class="ColorScheme-ViewBackground" style="fill:currentColor;fill-opacity:0.75" d="M1,14 A13,13 0 0 1 14,1 L14,2 A13,12 0 0 0 1,14 Z"/></g>
+  <g id="top"><rect class="ColorScheme-ViewBackground" style="fill:currentColor;fill-opacity:0.84" x="14" y="0" width="4" height="14"/><rect class="ColorScheme-Text" style="fill:currentColor;fill-opacity:0.12" x="14" y="0" width="4" height="1"/><rect class="ColorScheme-ViewBackground" style="fill:currentColor;fill-opacity:0.75" x="14" y="1" width="4" height="1"/></g>
+  <g id="topright"><path class="ColorScheme-ViewBackground" style="fill:currentColor;fill-opacity:0.84" d="M18,0 A14,14 0 0 1 32,14 L18,14 Z"/><path class="ColorScheme-Text" style="fill:currentColor;fill-opacity:0.12" d="M18,0 A14,14 0 0 1 32,14 L31,14 A13,13 0 0 0 18,1 Z"/><path class="ColorScheme-ViewBackground" style="fill:currentColor;fill-opacity:0.75" d="M18,1 A13,13 0 0 1 31,14 A13,12 0 0 0 18,2 Z"/></g>
+  <g id="left"><rect class="ColorScheme-ViewBackground" style="fill:currentColor;fill-opacity:0.84" x="0" y="14" width="14" height="4"/><rect class="ColorScheme-Text" style="fill:currentColor;fill-opacity:0.12" x="0" y="14" width="1" height="4"/></g>
+  <rect id="center" class="ColorScheme-ViewBackground" style="fill:currentColor;fill-opacity:0.84" x="14" y="14" width="4" height="4"/>
+  <g id="right"><rect class="ColorScheme-ViewBackground" style="fill:currentColor;fill-opacity:0.84" x="18" y="14" width="14" height="4"/><rect class="ColorScheme-Text" style="fill:currentColor;fill-opacity:0.12" x="31" y="14" width="1" height="4"/></g>
+  <g id="bottomleft"><path class="ColorScheme-ViewBackground" style="fill:currentColor;fill-opacity:0.84" d="M0,18 L14,18 L14,32 A14,14 0 0 1 0,18 Z"/><path class="ColorScheme-Text" style="fill:currentColor;fill-opacity:0.12" d="M0,18 L1,18 A13,13 0 0 0 14,31 L14,32 A14,14 0 0 1 0,18 Z"/></g>
+  <g id="bottom"><rect class="ColorScheme-ViewBackground" style="fill:currentColor;fill-opacity:0.84" x="14" y="18" width="4" height="14"/><rect class="ColorScheme-Text" style="fill:currentColor;fill-opacity:0.12" x="14" y="31" width="4" height="1"/></g>
+  <g id="bottomright"><path class="ColorScheme-ViewBackground" style="fill:currentColor;fill-opacity:0.84" d="M18,18 L32,18 A14,14 0 0 1 18,32 Z"/><path class="ColorScheme-Text" style="fill:currentColor;fill-opacity:0.12" d="M32,18 A14,14 0 0 1 18,32 L18,31 A13,13 0 0 0 31,18 Z"/></g>
+  <g fill="#000000">
+    <path id="mask-topleft" d="M40,14 A14,14 0 0 1 54,0 L54,14 Z"/>
+    <rect id="mask-top" x="54" y="0" width="4" height="14"/>
+    <path id="mask-topright" d="M58,0 A14,14 0 0 1 72,14 L58,14 Z"/>
+    <rect id="mask-left" x="40" y="14" width="14" height="4"/>
+    <rect id="mask-center" x="54" y="14" width="4" height="4"/>
+    <rect id="mask-right" x="58" y="14" width="14" height="4"/>
+    <path id="mask-bottomleft" d="M40,18 L54,18 L54,32 A14,14 0 0 1 40,18 Z"/>
+    <rect id="mask-bottom" x="54" y="18" width="4" height="14"/>
+    <path id="mask-bottomright" d="M58,18 L72,18 A14,14 0 0 1 58,32 Z"/>
+  </g>
+  <g fill="#ff00ff">
+    <rect id="hint-left-margin" x="80" y="0" width="12" height="2"/>
+    <rect id="hint-right-margin" x="80" y="4" width="12" height="2"/>
+    <rect id="hint-top-margin" x="96" y="0" width="2" height="6"/>
+    <rect id="hint-bottom-margin" x="100" y="0" width="2" height="6"/>
+  </g>
+</svg>

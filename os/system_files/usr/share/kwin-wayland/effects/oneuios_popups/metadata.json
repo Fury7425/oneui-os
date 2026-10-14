@@ -1,0 +1,14 @@
+{
+    "KPackageStructure": "KWin/Effect",
+    "KPlugin": {
+        "Authors": [{ "Name": "OneUI OS" }],
+        "Category": "Appearance",
+        "Description": "Taskbar popups and notifications fade in and rise on a spring; menus and tooltips fade",
+        "EnabledByDefault": true,
+        "Id": "oneuios_popups",
+        "License": "GPL",
+        "Name": "OneUI OS popups"
+    },
+    "X-KDE-Ordering": 60,
+    "X-Plasma-API": "javascript"
+}

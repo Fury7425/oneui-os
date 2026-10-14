@@ -116,7 +116,8 @@ svg { display: block; }
 .pill { height: 56px; border-radius: 28px; display: flex; align-items: center; gap: 12px; padding: 0 12px; }
 .taskbar > :first-child { justify-self: start; }
 .taskbar > :last-child { justify-self: end; padding-right: 20px; }
-.logo { width: 34px; height: 34px; border-radius: 50%; background: var(--on); color: var(--on-fg); display: grid; place-items: center; }
+.logo { width: 34px; height: 34px; border-radius: 50%; overflow: hidden; box-shadow: 0 0 0 1px var(--line); }
+.logo svg { width: 100%; height: 100%; }
 .ws { display: flex; gap: 5px; align-items: center; padding: 0 6px; }
 .ws i { width: 7px; height: 7px; border-radius: 4px; background: var(--track); }
 .ws i.busy { background: var(--ink-3); } .ws i.cur { width: 22px; background: var(--ink); }

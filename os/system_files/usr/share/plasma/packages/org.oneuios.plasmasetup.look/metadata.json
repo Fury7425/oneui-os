@@ -1,0 +1,13 @@
+{
+    "KPackageStructure": "KDE/PlasmaSetup",
+    "KPlugin": {
+        "Authors": [{ "Name": "OneUI OS" }],
+        "Description": "Light or dark, and a colour palette, applied as you pick them.",
+        "Id": "org.oneuios.plasmasetup.look",
+        "License": "GPL-2.0-or-later",
+        "Name": "Choose a look"
+    },
+    "NoDisplay": true,
+    "X-KDE-ParentApp": "org.kde.plasmasetup",
+    "X-KDE-Weight": 25
+}

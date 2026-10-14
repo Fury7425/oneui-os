@@ -15,6 +15,11 @@ sudo unzip -oj /tmp/pretendard.zip public/variable/PretendardVariable.ttf -d /us
 sudo fc-cache -f
 sudo sh -c 'cat /usr/share/color-schemes/OneUIOSLight.colors >> /etc/xdg/kdeglobals'
 sudo chmod 755 /usr/libexec/oneui-os-firstlogin
+sudo sed -i 's|property bool touchingWindowDirect: visibleWindowsModel.count > 0|property bool touchingWindowDirect: false // OneUI OS: pills always float|' \
+    /usr/share/plasma/shells/org.kde.plasma.desktop/contents/views/Panel.qml
+sudo rm -f /etc/xdg/autostart/org.kde.discover.notifier.desktop /etc/xdg/autostart/org.kde.xwaylandvideobridge.desktop
+sudo rm -rf /usr/share/plasma/packages/org.kde.plasmasetup.{prepare,finished}
+sudo sed -i 's/"X-KDE-Weight": 50/"X-KDE-Weight": 15/' /usr/share/plasma/packages/org.kde.plasmasetup.wifi/metadata.json
 LNF=/usr/share/plasma/look-and-feel
 sudo cp -r $LNF/org.oneuios.light.desktop/contents/layouts $LNF/org.oneuios.dark.desktop/contents/
 for d in images images_dark; do

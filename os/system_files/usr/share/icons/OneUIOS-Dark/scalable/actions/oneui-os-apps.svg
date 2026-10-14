@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-3.5 -3.5 31 31">
+  <!-- the guide's apps button (.grid9): nine 1.8 r dots in ink. Padded so it reads at 17 px where Kickoff draws 22 px.
+       Kickoff doesn't recolour icons, so light and dark each carry their own copy. -->
+  <style id="current-color-scheme">.ColorScheme-Text { color:#f5f5f8; }</style>
+  <g class="ColorScheme-Text" style="fill:#f5f5f8">
+    <circle class="ColorScheme-Text" style="fill:#f5f5f8" cx="5" cy="5" r="1.8"/><circle class="ColorScheme-Text" style="fill:#f5f5f8" cx="12" cy="5" r="1.8"/><circle class="ColorScheme-Text" style="fill:#f5f5f8" cx="19" cy="5" r="1.8"/>
+    <circle class="ColorScheme-Text" style="fill:#f5f5f8" cx="5" cy="12" r="1.8"/><circle class="ColorScheme-Text" style="fill:#f5f5f8" cx="12" cy="12" r="1.8"/><circle class="ColorScheme-Text" style="fill:#f5f5f8" cx="19" cy="12" r="1.8"/>
+    <circle class="ColorScheme-Text" style="fill:#f5f5f8" cx="5" cy="19" r="1.8"/><circle class="ColorScheme-Text" style="fill:#f5f5f8" cx="12" cy="19" r="1.8"/><circle class="ColorScheme-Text" style="fill:#f5f5f8" cx="19" cy="19" r="1.8"/>
+  </g>
+</svg>

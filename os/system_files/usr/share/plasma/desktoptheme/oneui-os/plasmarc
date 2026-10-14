@@ -1,10 +1,11 @@
 [AdaptiveTransparency]
 enabled=true
 
-# the mockup's glass: blur(40px) saturate(180%)
+# the guide's glass: blur(40px) saturate(180%). Contrast stays at 1: Breeze's 0.2 greys out whatever is behind,
+# so the blur no longer reads and the pills look solid.
 [ContrastEffect]
 enabled=true
-contrast=0.2
+contrast=1.0
 intensity=1.0
 saturation=1.8
 

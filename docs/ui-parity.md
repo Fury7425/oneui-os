@@ -26,13 +26,11 @@ time, then report it to KDE with the startup log.
 | View | Element | L | D | Status | Next step |
 |---|---|---|---|---|---|
 | Boot | Plymouth `bgrt` (firmware logo + spinner) | – | – | matches (Fedora default) | Check on the laptop; a VM has no firmware logo |
-| Plasma Setup landing | OneUI OS wallpaper | ✓ | ✓ | matches | |
-| Plasma Setup landing | "Welcome to Plasma Desktop" title, small Breeze button | ✓ | ✓ | close | Hard-coded in `plasma-setup`; needs an upstream option or a patch |
-| Hello page | Multi-language greeting, 5 gridUnits bold, rises in, fades out | ✓ | – | matches | |
-| Hello / every page | Wizard frame, Back/Next buttons, page title | ✓ | ✓ | close | Plasma Setup's own frame; can't be restyled by a module |
-| Galaxy features page | One UI list card: 26 px card, coloured 34 px circles, inset separators | ✓ | ✓ | matches | |
-| Completed page | KDE's Konqi artwork | ✓ | ✓ | missing | Replace `org.kde.plasmasetup.finished` with a OneUI OS page |
-| Setup's dark switch | New account gets OneUI OS dark, not Fedora's theme | – | ✓ | matches | |
+| Plasma Setup landing | Guide greeting: "Hello" in ten languages (96 px bold) on the blurred wallpaper, language chip, 72 px arrow | ✓ | ✓ | matches | The guide's accessibility button (bottom left) is not there; Plasma Setup's Restart / Shut Down stay bottom right |
+| Every step | One glass card, 34 px corners, title on the left, Back / dots / Next pill, card fits each step | ✓ | ✓ | matches | Steps still slide sideways (Plasma Setup's own animation, now on the Move curve) instead of the guide's short cross-fade |
+| Choose a look | Light / Dark previews and six palettes, applied live (dark ground and card, accent on Next and radios) | ✓ | ✓ | matches | |
+| Galaxy features page | One UI list group, Material glyphs in ink-2, inset separators | ✓ | – | close | The guide's per-row switches are not there yet |
+| You're all set | Mark, "You're all set, <name>", where things live; Next reads "Start" | ✓ | – | close | The ribbon doesn't draw itself in yet; Start (finish) not clicked in the VM |
 | Login screen (Plasma Login Manager) | OneUI OS wallpaper, clock | ✓ | – | close | Clock is 12 h and bold; avatar/buttons are stock |
 | Lock screen | OneUI OS wallpaper, ink clock | ✓ | ✓ | close | Same clock styling as login |
 | First login | Fedora "Welcome Center" | ✓ | ✓ | matches (off) | |
@@ -42,11 +40,11 @@ time, then report it to KDE with the startup log.
 | Element | L | D | Status | Next step |
 |---|---|---|---|---|
 | Wallpaper (ribbon, light/dark) | ✓ | ✓ | matches | |
-| Three floating pills, 56 px, full round ends, 1 px edge | ✓ | ✓ | close | See the open issue above |
-| Left pill: ✦ button + workspace dots + now-playing chip (cover, title, EQ) | ✓ | ✓ | matches | |
+| Three floating pills, 56 px, full round ends, 1 px edge, 12 px gap, soft shadow; stay pills next to windows | ✓ | – | close | See the open issue above. Motion in the VM is CPU-rendered (llvmpipe), so judge smoothness on the laptop |
+| Left pill: round logo + workspace dots (current, busy, empty) + now-playing chip (cover, title, EQ) | ✓ | ✓ | matches | |
 | Left pill: red recording chip with timer | – | – | close | Shows while an app records the microphone; not exercised in the VM |
 | Left pill: countdown timer chip | – | – | missing | Read KClock timers over D-Bus in `liveactivities` |
-| Centre pill: drawer button + pinned/running apps | ✓ | ✓ | close | Mockup also has a search button first; app icons are Papirus, not the mockup's squircles (icon theme generator drafted) |
+| Centre pill: search, apps, pinned / running apps with running dots | ✓ | ✓ | close | App icons are Papirus, not the mockup's squircles (icon theme generator drafted) |
 | Right pill: bell · Wi-Fi/volume/battery pill · "9:41 / Mon 12" | ✓ | ✓ | matches | |
 | Big clock: date above, "09" over "41" light 124 px | ✓ | ✓ | matches | |
 | Clock text contrast on the wallpaper | ✓ | ✓ | matches | Light scheme's Complementary colours now ink-on-light |
@@ -54,7 +52,7 @@ time, then report it to KDE with the startup log.
 | Batteries card (a ring per device) | ✓ | ✓ | matches | VM has only the laptop battery; Bluetooth devices add rings |
 | Calendar card ("Today · 2 events") | ✓ | ✓ | close | Month grid instead of an agenda list |
 | Card shape: 28 px glass with edge | ✓ | ✓ | matches | |
-| Quick settings panel (click the status group) | ✓ | – | matches | Wi-Fi/Bluetooth pills, 8 toggles, brightness and volume sliders all work in the VM; dark-mode look not captured |
+| Quick panel (click the status group) | ✓ | ✓ | matches | One UI 9 layout from the guide; checked in light and in dark with the Blue palette |
 | Window chrome (DeX circular buttons, close in a tinted circle) | ✓ | – | close | Breeze buttons; an Aurorae theme would match exactly |
 
 ## Other views

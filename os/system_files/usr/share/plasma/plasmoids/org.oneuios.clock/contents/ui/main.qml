@@ -16,8 +16,9 @@ PlasmoidItem {
 
     Plasmoid.backgroundHints: PlasmaCore.Types.NoBackground
     preferredRepresentation: compactRepresentation
-    toolTipMainText: Qt.locale().toString(now, "dddd")
-    toolTipSubText: Qt.locale().toString(now, Locale.LongFormat).replace(/\s*\d+:\d+.*$/, "")
+    // no hover tooltip on the right pill, as in the guide (the pill already shows the date)
+    toolTipMainText: ""
+    toolTipSubText: ""
 
     P5Support.DataSource {
         id: time

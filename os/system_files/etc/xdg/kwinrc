@@ -5,6 +5,10 @@ Rows=1
 
 [Plugins]
 blurEnabled=true
+# popups animate with the guide's curves (oneuios_popups), so the stock popup effects stay off
+oneuios_popupsEnabled=true
+slidingpopupsEnabled=false
+fadingpopupsEnabled=false
 
 [Effect-blur]
 BlurStrength=12

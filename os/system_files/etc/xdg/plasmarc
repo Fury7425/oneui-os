@@ -1,0 +1,3 @@
+# Taskbar tooltips appear after a 350 ms hover, as in the guide (Plasma's default is 700 ms)
+[PlasmaToolTips]
+Delay=350

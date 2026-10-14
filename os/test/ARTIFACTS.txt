@@ -19,5 +19,18 @@ VM-side test state (inside the VM, gone with it): mpv + mpv-mpris (media chip te
 [changed] oneui-os-dev memory 6 GB -> 4 GB (host was short on RAM); goes away with the VM
 [planned] os\test\shots\ (screenshots)
 [planned] os\test\ARTIFACTS.txt (this file)
+[changed] 2026-10-13: VM oneui-os-dev was found unregistered (old checkpoints gone, merged into the disk). Re-registered
+  around E:\oneui-os-vm\oneui-os-dev.vhdx: new id 25ECE86B-7427-411C-877E-BE6D81FA2A56, 4 GB, 4 vCPU, 1920x1200.
+[created] Checkpoint on oneui-os-dev: before-first-boot-qs (state before the first boot / taskbar / quick panel pass)
+VM-side test state added in that pass: /etc/environment.d/90-oneuios-vm-test.conf (KWIN_EFFECTS_FORCE_ANIMATIONS=1;
+  llvmpipe otherwise disables all KWin animations); /root/plasmasetup-stock-backup/ (Plasma Setup's prepare and finished
+  pages and the old hello page, moved out as build.sh does); dev2's tray, quick panel and taskbar applet shortcuts
+  (Ctrl+Alt+Shift+F<n>, used to open popups for screenshots); dev2's layout reset to the new three-pill layout.
+VM-side test state from the taskbar pass (2026-10-14): Panel.qml patched as build.sh does (original kept at
+  /root/Panel.qml.orig); Discover notifier and Xwayland Video Bridge autostart files moved to /root/autostart-backup/;
+  dev2 has 3 virtual desktops; KWin debug console was opened once by mistake and closed. Glass pass: /tmp/stripes.png
+  and /tmp/tile.png (test pattern, wallpaper restored afterwards). Host: a python http.server on 127.0.0.1:8765 served a
+  scratchpad copy of the prototype to the browser pane; stopped, and its .claude/launch.json removed.
+[created] %USERPROFILE%\.ssh\known_hosts entries 172.27.134.107, 172.28.225.138 (ssh-keygen -R <ip>)
 [created] Host: current user added to local group "Hyper-V Administrators" (undo: Remove-LocalGroupMember -Group "Hyper-V Administrators" -Member "$env:USERDOMAIN\$env:USERNAME", then sign out/in)
 Not created: oneui-os-test VM (only removed if it turns out to exist). No Windows features enabled or other settings changed.

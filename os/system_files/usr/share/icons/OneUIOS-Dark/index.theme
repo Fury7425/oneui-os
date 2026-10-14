@@ -3,11 +3,18 @@ Name=OneUI OS Dark
 Comment=OneUI OS line icons where the mockup has its own; everything else from Papirus-Dark
 Inherits=Papirus-Dark,breeze-dark,hicolor
 Example=notification-inactive-symbolic
-Directories=scalable/status
+Directories=scalable/status,scalable/actions
 
 [scalable/status]
 Size=22
 MinSize=16
 MaxSize=256
 Context=Status
+Type=Scalable
+
+[scalable/actions]
+Size=22
+MinSize=16
+MaxSize=256
+Context=Actions
 Type=Scalable

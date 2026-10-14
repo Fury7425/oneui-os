@@ -4,7 +4,7 @@ This folder is the build system for OneUI OS, a Galaxy Book-flavoured Linux. It 
 
 - **Base:** Fedora Kinoite 44 (KDE Plasma 6.6, atomic) via Universal Blue's `kinoite-main` image
 - **Delivery:** a bootc container image, built by GitHub Actions, turned into an installer ISO
-- **First boot:** Plasma Setup, with two extra Galaxy-style pages
+- **First boot:** Plasma Setup, restyled to One UI with "look", "Galaxy features" and "You're all set" pages
 - **Hardware target:** Galaxy Book4/5 (tested design target: your Galaxy Book4 Pro 14", `NT940XGQ`, Meteor Lake)
 
 ---
@@ -53,8 +53,8 @@ os/
    ├─ usr/share/color-schemes/   OneUIOSLight/Dark, generated from your mockup's oklch tokens
    ├─ usr/share/plasma/look-and-feel/org.oneuios.{light,dark}.desktop/
    │                             global themes; light one carries the three-pill layout script
-   ├─ usr/share/plasma/packages/org.oneuios.plasmasetup.{hello,galaxy}/
-   │                             extra Plasma Setup pages
+   ├─ usr/share/plasma/packages/org.oneuios.plasmasetup.{look,galaxy,done}/
+   │                             extra Plasma Setup pages; done/Skin.qml restyles the setup frame
    ├─ usr/share/wallpapers/OneUIOS/   your mockup's ribbon wallpaper, light + dark
    ├─ usr/libexec/galaxybook-setup      per-laptop fixes (mic driver, speaker key)
    ├─ usr/lib/systemd/system/    galaxybook-setup, max98390 speaker setup, default Flatpaks
@@ -71,7 +71,7 @@ os/
 
 1. **Power on.** The Galaxy Book firmware shows the SAMSUNG logo. Fedora's boot splash (Plymouth `bgrt`) keeps that firmware logo on screen with a spinner under it, so the whole boot looks like Samsung's own. Nothing Samsung-owned ships in the ISO; the logo is read from the laptop's firmware.
 2. **Installer.** Pick a disk and a time zone. There are no account questions; those move to first boot.
-3. **First boot (Plasma Setup).** Welcome screen on the OneUI OS wallpaper, then a Galaxy-style **"Hello / 안녕하세요 / Bonjour…"** greeting, language, keyboard, display scale and theme, your account, time zone, Wi-Fi, then a **Galaxy features** page (Quick Share, phone, Buds, battery protection, plus the one-time speaker step if needed). All of it uses the OneUI OS colours and the Pretendard font.
+3. **First boot (Plasma Setup).** A Galaxy-style **"Hello / 안녕하세요 / Bonjour…"** greeting on the blurred wallpaper with a round arrow, then one glass card: language, keyboard, Wi-Fi, your account, **Choose a look** (light or dark and a colour palette, applied as you pick), time zone, **Galaxy features** (Quick Share, phone, Buds, battery protection, plus the one-time speaker step if needed) and **You're all set**. All of it uses the OneUI OS colours and the Pretendard font.
 4. **First login.** Three floating pills at the bottom, a big desktop clock, the ribbon wallpaper, Papirus icons, and dark mode from sunset to sunrise (One UI's "Dark mode: as scheduled").
 
 ---
@@ -183,6 +183,8 @@ Then install:
 
 ## 5. The UI, step by step (mockup → Plasma)
 
+**Style and motion guide:** `mockup/motion.html` (published as the "OneUI OS Motion" artifact). All UI work follows it: tokens, glass rules, curves and springs, choreography, palette roles, icon rules, and the boot/setup/lock flows.
+
 What's already in the image and what's left. "Checked" means seen working in a Fedora KDE 44 VM (Plasma 6.6.4)
 with only these files applied; the per-view detail and next steps are in [`docs/ui-parity.md`](../docs/ui-parity.md).
 
@@ -190,21 +192,22 @@ with only these files applied; the per-view detail and next steps are in [`docs/
 |---|---|---|---|
 | Boot logo | Plymouth `bgrt` (Fedora's default): firmware logo + spinner | built in | Done (VM has no firmware logo to show) |
 | Login screen | Plasma Login Manager (replaced SDDM in F44) on the OneUI OS wallpaper | `usr/lib/plasmalogin/defaults.conf` | Checked |
-| First-boot setup | Plasma Setup + `hello` (rising multi-language greeting) and `galaxy` (One UI list card) pages; welcome screen wallpaper | `plasmasetup.*`, `build.sh` | Checked |
-| Setup's dark-mode switch | Applies Fedora's theme by name; first login swaps in OneUI OS light/dark + pills | `oneui-os-firstlogin` | Checked |
+| First-boot setup | Plasma Setup restyled to the guide: the landing is the "Hello" greeting on the blurred wallpaper with a round arrow; steps sit on one 34 px glass card (title left, Back, progress dots, Next pill, resizes per step). Pages: language, keyboard, Wi-Fi, account, `look` (light/dark + palette, applied live), time, `galaxy`, `done` ("You're all set"). Fedora's dark-mode page and KDE's "Completed!" page are removed | `plasmasetup.*` (`done/Skin.qml`), `build.sh`, `share/oneui-os/wall-blur-*.png` | Checked (Finish not clicked in the VM) |
+| Setup's look step | Applies OneUI OS light/dark and the accent; Plasma Setup copies kdeglobals to the new account. `oneui-os-firstlogin` still swaps a Fedora theme for ours if one slips through | `look`, `oneui-os-firstlogin` | Checked |
 | Fedora "Welcome" window | Turned off (KF6 kded still reads `kded5rc`) | `etc/xdg/kded5rc` | Checked |
-| Taskbar as three floating pills | 3 bottom panels, `lengthMode = "fit"`, `floating`, 56 px | `layout.js` | Close: pills, glass and float checked after a plasmashell restart; on brand-new accounts the VM showed no panels (open issue, see `docs/ui-parity.md`) |
-| Left pill: ✦ + workspaces + live activities | `org.oneuios.button` (✦, opens Overview), `org.oneuios.workspaces` (dots), `org.oneuios.liveactivities` (now playing chip with cover + EQ; red mic chip with timer) | `plasmoids/`, `layout.js` | Checked (timer chip: not yet) |
-| Centre pill: apps + pinned/running | Kickoff grid + Icons-only Task Manager | `layout.js` | Checked |
-| Right pill: bell · Wi-Fi/volume/battery · clock | Tray (app icons only) + Notifications (bell) + `org.oneuios.quicksettings` (status group, click = quick settings) + Digital Clock (click = calendar) | `layout.js` | Checked |
-| Pill / 28 px radius family, glass | Plasma Style `oneui-os` (panel, popups, cards; 1 px edge like the mockup's line token) | `desktoptheme/oneui-os` | Checked |
+| Taskbar as three floating pills | 3 bottom panels, `lengthMode = "fit"`, `floating`, 56 px, 12 px from the edges, the guide's soft shadow under each pill. They stay pills when a window touches them (Plasma would turn them into a plain bar; `build.sh` patches `Panel.qml`, and the build fails if that line moves) | `layout.js`, `build.sh`, `widgets/panel-background.svg`, `test/panel-shadow.py` | Close: checked after a plasmashell restart; on brand-new accounts the VM showed no panels (open issue, see `docs/ui-parity.md`) |
+| Left pill: logo + workspaces + live activities | `org.oneuios.button` (round logo, opens Overview), `org.oneuios.workspaces` (dots: current, busy, empty), `org.oneuios.liveactivities` (now playing chip with cover + EQ; red mic chip with timer) | `plasmoids/`, `layout.js` | Checked (timer chip: not yet) |
+| Centre pill: search, apps, pinned and running | `org.oneuios.button` (search = KRunner) + Kickoff grid + `org.oneuios.tasks` (38 px icons, running dot 4 px / focused 12 px, divider before running-only apps, grow/shrink on add/remove) | `plasmoids/`, `layout.js` | Checked |
+| Right pill: bell · Wi-Fi/volume/battery · clock | Tray (app icons) + Notifications (bell) + `org.oneuios.quicksettings` (status group, click = quick panel; the battery number splits ink/On text at the charge edge) + `org.oneuios.clock` (click = calendar) | `layout.js`, `build.sh` | Checked: no "^" overflow. Tray plasmoids are limited to ones that stay hidden until needed; Discover's update icon and Xwayland Video Bridge don't autostart |
+| Pill / 28 px radius family, glass | Plasma Style `oneui-os`: pills and popups are the guide's floating glass: the scheme's view colour (white in light) at 62 %, KWin blur (strong enough to flatten 12 px stripes, like the guide's 40 px), saturation 180 % with contrast left at 1 (Breeze's 0.2 greys the blur out), a 1 px hairline and a 1 px light edge inside the top; popups have 32 px corners; no underline under an open applet. Tooltips are the guide's 28 px glass pill after 350 ms, centre pill only | `desktoptheme/oneui-os`, `etc/xdg/plasmarc`, `oneuios_popups` | Checked against the prototype (same stripe pattern behind both), light and dark |
+| Popup motion | KWin effect `oneuios_popups`: taskbar popups and notifications fade 180 ms and rise 16 px from 94 % on a spring; exits 200 ms on the Exit curve. Replaces Sliding and Fading popups | `kwin-wayland/effects/oneuios_popups`, `kwinrc` | Loaded in the VM (llvmpipe needs `KWIN_EFFECTS_FORCE_ANIMATIONS=1`) |
 | Big clock | `org.oneuios.bigclock`: date above, "09" over "41" in light 124 px | `plasmoids/`, `layout.js` | Checked |
 | Weather / batteries / calendar cards | Weather Report, `org.oneuios.batteries` (a ring per device), Calendar | `plasmoids/`, `layout.js` | Close (weather needs a location; calendar is a month grid) |
 | Text straight on the wallpaper (clock) | Complementary colours = ink on light in the light scheme | `OneUIOSLight.colors` | Checked |
 | Finder ("What are you looking for?") | KRunner floating in the centre, 28 px glass | `krunnerrc` | Close |
 | App drawer | Kickoff popup, grid, 28 px glass | `layout.js` | Close (sidebar + footer remain) |
 | Notification pill stack | Plasma notifications in 28 px glass | Plasma Style | Close (icon on the right, not a pill row) |
-| Quick settings tiles + sliders | `org.oneuios.quicksettings`: Wi-Fi/Bluetooth pills, 8 toggles (DND, dark mode, Quick Share, Multi Control, performance, eye comfort, screen recorder, lock), brightness/volume sliders, mic-in-use row | see U3 | Checked |
+| Quick panel (One UI 9) | `org.oneuios.quicksettings`: time header with edit/power/settings, Wi-Fi and Bluetooth wells, tile frame (airplane, DND, Quick Share, Multi Control, performance, eye comfort, screen recorder, hotspot; handle opens keyboard light, screenshot, lock), sliders with dark mode and mute beside them, media output row, mic-in-use row. Material Symbols glyphs; rows rise in bottom-first | see U3 | Checked (light and dark) |
 | DeX window buttons | Breeze, minimise/maximise/close on the right | `kwinrc` | Close; Aurorae theme for exact |
 | Desktops overview | KWin Overview (Meta+W) | built in | Close |
 | Colours (your oklch tokens) | `OneUIOSLight/Dark.colors` | `color-schemes/` | Checked |
@@ -247,14 +250,43 @@ Small QML widgets in `system_files/usr/share/plasma/plasmoids/org.oneuios.*`, bu
 | `quicksettings` | Right pill status group; click opens the One UI quick panel |
 | `liveactivities` | Left pill chips: now playing (click = play/pause), microphone recording timer |
 | `workspaces` | Workspace dots; click or scroll switches desktop |
-| `button` | Round button running a command (✦ = Overview) |
+| `button` | Round button running a command (logo = Overview, search = KRunner) |
+| `tasks` | Centre pill apps: pinned, then running; running dots; right click: new window, pin, close |
 | `bigclock` | Desktop clock, hours over minutes |
 | `batteries` | Desktop card with a ring per battery (laptop, Bluetooth devices) |
+
+The quick panel matches One UI 9 (the reference is the motion prototype, `mockup/motion.html`): a time and date header, Wi-Fi and Bluetooth in two wells, the tile grid in its own rounded frame with a handle, sliders with a button beside each (dark mode next to brightness, mute next to volume). Tile glyphs are **Material Symbols Rounded, filled** (Apache-2.0), exported to SVG. Off tiles are a translucent circle; on tiles are a solid circle in the palette's "on" colour (white in dark Mono, ink in light Mono).
+
+### U4: Colour palette for OneUI OS apps (reminder)
+
+One UI's **Wallpaper and style → Color palette**: **Auto** (follows the wallpaper and light/dark), Mono (default), palettes taken from the wallpaper, and basic colours, plus **Apply palette to app icons**. Auto's extraction steps are in the guide's Color palette section; run them in a small user service that watches the wallpaper setting.
+
+1. A "Wallpaper and style" page (in the Settings app or a KCM) that writes the accent colour to `kdeglobals`. Plasma 6 can already take the accent from the wallpaper; Kirigami's highlight colour follows it.
+2. Wallpaper palettes: generate them with Material Color Utilities (Apache-2.0; quantise + score), four from the wallpaper plus fixed basic colours.
+3. Every OneUI OS plasmoid and app reads the accent for its "on" state, switches, the nav pill and today in the calendar, and tints glass slightly toward it. The roles and lightness values are in the prototype's Color palette section.
+4. Themed icons: on palette change, generate an `OneUIOS-Themed` icon theme (each app's monochrome glyph on the palette's tile tone, inheriting the normal theme) and switch to it.
+
+### U5: Icon packs (reminder)
+
+- **App icons:** try [OneUI4-Icons](https://github.com/mjkim0727/OneUI4-Icons) (GPL-3, based on Fluent, light and dark variants). Before shipping: check how many apps it covers, check that none of its icons are copied Samsung artwork, and pin a commit in `build.sh`. Keep Papirus as the fallback (`Inherits=`).
+- **Quick panel and status glyphs:** Material Symbols Rounded, filled (see U3).
+- **Themed icons:** see U4.
+- **Not allowed:** Samsung's own One UI icons. They can't be redistributed, same as the fonts and logos (Step 8).
+
+### U6: Boot, first boot, lock and power menu (reminder)
+
+Designed in the guide's "Power on to desktop" section; each piece maps to a Plasma part:
+
+- **Boot / restart / power off:** a Plymouth theme on the two-step plugin. Firmware logo first (like Fedora's bgrt theme), then the mark drawing its ribbon as animation frames and three dots as the throbber; "Restarting" / "Shutting down" under the mark.
+- **First boot:** done: greeting, glass card, "look" and "You're all set" pages (see the table above). Left: the guide's switches on the Galaxy features rows, and the ribbon drawing on the final mark.
+- **Lock and login:** one design for the look-and-feel `lockscreen` and the Plasma Login Manager greeter: clock on the sharp wallpaper, sign-in on the blurred one, fingerprint option if libfprint supports the power-key sensor.
+- **Desktop arrival:** look-and-feel `splash` fades the blurred wallpaper out over the desktop.
+- **Power menu:** look-and-feel `logout`: Lock, Sleep, Restart, Power off.
 
 To try a change on a running system: copy the folder to `/usr/share/plasma/plasmoids/`, delete
 `~/.cache/plasmashell/qmlcache`, then `systemctl --user restart plasma-plasmashell`. Errors land in `journalctl --user`.
 
-### U4: Desktop widgets
+### U7: Desktop widgets
 
 `layout.js` places the mockup's left column (big clock, weather, batteries, calendar) at the mockup's coordinates.
 The weather card shows "Configure…" until the user picks a location.
@@ -326,16 +358,20 @@ The weather card shows "Configure…" until the user picks a location.
 - Don't ship Samsung's logos, fonts (Samsung One, Sharp Sans, Simplified), or colour files (ICC/LUT). Saying "for Galaxy Book laptops" to describe compatibility is fine.
 - The SAMSUNG logo at boot is fine: it comes from the user's own firmware.
 - Pretendard is OFL, Papirus is GPL-3, and the speaker driver is GPL-2 (credit Andycodeman/samsung-galaxy-book-linux-fixes in your release notes).
+- Material Symbols Rounded (Apache-2.0) ship as `oneui-os-ms-*` glyphs (quick panel, setup). Planned: OneUI4-Icons (GPL-3) if it passes the provenance check, Material Color Utilities (Apache-2.0) for palettes. Samsung's own icons are never shipped.
 
 ---
 
 ## 9. Not done yet (in priority order)
 
 1. **Not build-tested.** The first **Build image** run and a VM install are the real tests. The most likely failure points are the `kernel-devel` version match in `kmod.sh` and the installer with its user step turned off (if Anaconda refuses to continue, remove `Users` from `disable` in `iso.toml`).
-2. One UI quick panel plasmoid (U3), and the other gaps listed in `docs/ui-parity.md`.
-3. A "Galaxy Book" settings page for lid and USB-charging toggles and battery health, instead of `tee` commands.
-4. Live ISO (Universal Blue's Titanoboa) so people can try before installing. The Anaconda installer still shows Fedora artwork.
-5. Sign the image with cosign before sharing it widely.
+2. The gaps listed in `docs/ui-parity.md`.
+3. Colour palette and themed app icons (U4).
+4. App icon theme: evaluate OneUI4-Icons (U5).
+5. Boot animation, lock/login and power menu to the guide (U6).
+6. A "Galaxy Book" settings page for lid and USB-charging toggles and battery health, instead of `tee` commands.
+7. Live ISO (Universal Blue's Titanoboa) so people can try before installing. The Anaconda installer still shows Fedora artwork.
+8. Sign the image with cosign before sharing it widely.
 
 ---
 
