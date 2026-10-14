@@ -32,6 +32,9 @@ jobs:
           hook="${RUNNER_TEMP}/live-hook.sh"
           sed "s|@IMAGE_REF@|${IMAGE_REF}|" os/installer/live-hook.sh > "$hook"
 
+          # titanoboa pulls as root; log root's podman in so a private package still pulls here.
+          echo "${{ secrets.GITHUB_TOKEN }}" | sudo podman login ghcr.io -u "${{ github.actor }}" --password-stdin
+
           # Same titanoboa revision Bluefin builds with.
           boa="${RUNNER_TEMP}/titanoboa"
           git clone --quiet https://github.com/ublue-os/titanoboa "$boa"
