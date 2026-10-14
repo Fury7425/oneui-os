@@ -11,7 +11,7 @@ cp -r /usr/share/plasma/look-and-feel/org.oneuios.light.desktop/contents/layouts
 ### Packages
 # papirus: rounded, colourful icons closest to One UI. jetbrains-mono: the terminal font from the mockup.
 # i2c-tools + mokutil: Galaxy Book speaker setup. plasma-setup: the first-boot wizard (already in F44 Kinoite).
-dnf5 -y install papirus-icon-theme jetbrains-mono-fonts i2c-tools mokutil plasma-setup kde-connect unzip
+dnf5 -y install papirus-icon-theme jetbrains-mono-fonts i2c-tools mokutil plasma-setup kde-connect unzip openssl
 
 # power-profiles-daemon drives Samsung's platform_profile directly, so Fn+F11 and Plasma's battery
 # applet stay in sync. It is also much lighter than tuned (a Python daemon).
@@ -63,7 +63,8 @@ cp -a /kmod/lib/modules/. /usr/lib/modules/
 install -Dm755 /kmod/libexec/max98390-hda-i2c-setup /usr/libexec/max98390-hda-i2c-setup
 depmod -a "$KVER"
 # Lets galaxybook-setup queue the signing key without asking for a password (the user types "oneui-os" once in MokManager).
-mokutil --generate-hash=oneui-os >/usr/share/oneui-os/mok.hash
+# Same SHA-512 crypt string `mokutil --generate-hash` makes, but mokutil refuses to run without EFI variables.
+openssl passwd -6 oneui-os >/usr/share/oneui-os/mok.hash
 
 ### Services
 systemctl enable plasma-setup.service power-profiles-daemon.service \
