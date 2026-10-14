@@ -23,6 +23,10 @@ jobs:
           echo "IMAGE=ghcr.io/${GITHUB_REPOSITORY_OWNER,,}/oneui-os:latest" >> "$GITHUB_ENV"
           sed -i "s|ghcr.io/YOUR_GITHUB_USER|ghcr.io/${GITHUB_REPOSITORY_OWNER,,}|" os/disk_config/iso.toml
 
+      # The builder action pulls with root's podman, so log root in (needed while the package is private).
+      - name: Log in to GitHub Container Registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | sudo podman login ghcr.io -u "${{ github.actor }}" --password-stdin
+
       - name: Build ISO
         id: build
         uses: osbuild/bootc-image-builder-action@8661cd3832544ad68c12dcde8681b13ab0f56a8d
